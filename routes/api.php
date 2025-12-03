@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
@@ -19,4 +20,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
   // Transactions
   Route::post('/transactions', [TransactionController::class, 'transaction']);
+});
+
+
+Route::prefix('account')->middleware('auth:sanctum')->group(function () {
+  Route::post('/', [AccountController::class, 'store']);
+  Route::patch('{id}', [AccountController::class, 'update']);
+  Route::post('{id}/close', [AccountController::class, 'close']);
+  // Route::get('{id}/balance', [AccountController::class, 'balance']);
+  Route::get('{id}/full-balance', [AccountController::class, 'fullBalance']);
+  Route::get('{id}/tree', [AccountController::class, 'tree']);
 });
