@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RecommendationController;
+use App\Services\RecommendationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 })->middleware('auth:sanctum');
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -16,4 +20,28 @@ Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 Route::middleware(['auth:sanctum'])->group(function () {
   Route::post('/logout', [AuthController::class, 'logout']);
 
+
 });
+
+
+Route::prefix('account')->middleware('auth:sanctum')->group(function () {
+  Route::post('/', [AccountController::class, 'store']);
+  Route::post('{id}', [AccountController::class, 'update']);
+  Route::get('{id}/close', [AccountController::class, 'close']);
+  // Route::get('{id}/balance', [AccountController::class, 'balance']);
+  Route::get('{id}/full-balance', [AccountController::class, 'fullBalance']);
+  Route::get('{id}/tree', [AccountController::class, 'tree']);
+});
+
+  // Gimini
+  Route::post('/ai/recommend', [AiController::class, 'recommend']);
+
+
+
+
+Route::get('/poc/summary/{account}', function ($accountId, RecommendationService $svc) {
+    $summary = $svc->buildAccountSummary((int)$accountId);
+    return response()->json($summary);
+});
+
+Route::get('/recommend/{account}', [RecommendationController::class, 'recommend']);
