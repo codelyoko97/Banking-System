@@ -31,7 +31,7 @@ class TransactionRequest extends FormRequest
           'type' => 'required',
           'account_related_id' => 'sometimes',
           'employee_name' => 'sometimes',
-          'desvription' => 'sometimes',
+          'description' => 'sometimes',
         ];
       default:
         return [];

@@ -19,7 +19,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::post('/logout', [AuthController::class, 'logout']);
 
   // Transactions
-  Route::post('/transactions', [TransactionController::class, 'transaction']);
+  Route::post('/transaction', [TransactionController::class, 'transaction']);
 });
 
 
