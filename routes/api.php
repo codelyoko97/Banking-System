@@ -20,6 +20,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
   // Transactions
   Route::post('/transaction', [TransactionController::class, 'transaction']);
+  Route::post('/transaction/{id}/approve', [TransactionController::class, 'approve']);
+  Route::post('/scheduled-transactions', [TransactionController::class, 'store']);
 });
 
 

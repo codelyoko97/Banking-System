@@ -1,5 +1,5 @@
 <?php
-namespace App\Banking\Accounts\States;
+namespace App\Banking\Transactions\States;
 
 use App\Models\Account;
 

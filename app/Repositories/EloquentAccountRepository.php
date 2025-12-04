@@ -16,6 +16,10 @@ class EloquentAccountRepository implements AccountRepositoryInterface
     return Account::with('children')->find($id);
   }
 
+  public function findWithNumber(int $num): Account
+  {
+    return Account::where('number', $num)->first();
+  }
 
 
   public function create(array $data): Account

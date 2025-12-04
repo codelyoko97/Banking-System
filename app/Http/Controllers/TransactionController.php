@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
+use App\Models\Account;
+use App\Models\SchedualeTransaction;
 use App\Services\TransactionService;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -14,6 +17,21 @@ class TransactionController extends Controller
   }
   public function transaction(TransactionRequest $request)
   {
-    return response()->json($this->transactionService->transaction($request->validated()));
+    $dto = $request->toDTO($request->user());
+    return response()->json($this->transactionService->process($dto));
+  }
+
+  public function approve($id)
+  {
+    return response()->json($this->transactionService->approve($id));
+  }
+  public function store(TransactionRequest $request)
+  {
+    $plan = $this->transactionService->addPlan($request->validated());
+
+    return response()->json([
+      'message' => 'Scheduled transaction created successfully',
+      'data'    => $plan,
+    ], 201);
   }
 }

@@ -3,22 +3,40 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SchedualeTransaction extends Model
 {
-    protected $fillable = [
-        'account_id',
-        'type',
-        'amount',
-        'frequency',
-        'next_run',
-        'account_related_id'
-    ];
+  protected $table = 'scheduale_transactions';
 
-    public function account() {
-        return $this->belongsTo(Account::class);
-    }
-    public function related() {
-        return $this->hasMany(SchedualeTransaction::class);
-    }
+  protected $fillable = [
+    'account_id',
+    'amount',
+    'type',
+    'frequency',
+    'account_related_id',
+    'next_run',
+    'active',
+    'start_date',
+    'end_date',
+    'day_of_month',
+  ];
+
+  protected $casts = [
+    'amount' => 'decimal:4',
+    'next_run' => 'datetime',
+    'start_date' => 'date',
+    'end_date' => 'date',
+    'active' => 'boolean',
+  ];
+
+  public function account(): BelongsTo
+  {
+    return $this->belongsTo(Account::class);
+  }
+
+  public function relatedAccount(): BelongsTo
+  {
+    return $this->belongsTo(Account::class, 'account_related_id');
+  }
 }

@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\AccountRepositoryInterface;
 use App\Banking\Accounts\AccountFactory;
-use App\Banking\Accounts\States\AccountStateFactory;
+use App\Banking\Transactions\States\AccountStateFactory as StatesAccountStateFactory;
 use App\Models\Account;
 use App\Models\Log;
 use App\Models\Status;
@@ -65,7 +65,7 @@ class AccountService
   {
     $acc = $this->repo->find($id);
     if (!$acc) throw new \Exception('Account not found');
-    $state = AccountStateFactory::make($acc);
+    $state = StatesAccountStateFactory::make($acc);
     DB::transaction(function () use ($state, $acc) {
       $state->close($acc);
     });

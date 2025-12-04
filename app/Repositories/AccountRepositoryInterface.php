@@ -6,6 +6,7 @@ use App\Models\Account;
 
 interface AccountRepositoryInterface {
     public function find(int $id): ?Account;
+    public function findWithNumber(int $num): ?Account;
     public function findWithChildren(int $id): ?Account;
     public function create(array $data): Account;
     public function update(Account $account, array $data): Account;

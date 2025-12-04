@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('account_id')->constrained('accounts')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('status');
-            $table->bigInteger('amount');
+            $table->decimal('amount');
             $table->string('type');
-            $table->foreignId('account_related_id')->nullable()->constrained('transactions')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('account_related_id')->nullable()->constrained('accounts')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('role_id')->nullable()->constrained('roles')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('employee_name')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

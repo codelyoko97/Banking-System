@@ -12,11 +12,12 @@ class Transaction extends Model
         'amount',
         'type',
         'account_related_id',
+        'role_id',
         'employee_name',
         'description'
     ];
 
-    public function acount() {
+    public function account() {
         return $this->belongsTo(Account::class);
     }
     public function related() {
