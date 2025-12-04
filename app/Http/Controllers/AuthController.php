@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterCitizenRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\VerifyOtpRequest;
 use App\Models\User;
@@ -12,14 +13,15 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     protected $authService;
-    public function __construct(AuthService $authService)
-    {
-        $this->authService = $authService;
-    }
-    public function register(UserRequest $req)
+  public function __construct(AuthService $authService)
+  {
+    $this->authService = $authService;
+  }
+
+  public function register(RegisterCitizenRequest $req)
   {
     $data = $req->only(['name', 'email', 'phone', 'password']);
-    $user = $this->authService->register($data);
+    $user = $this->authService->registerCitizen($data);
     return response()->json(['message' => 'Registered. OTP sent', 'user_id' => $user->id], 201);
   }
 
