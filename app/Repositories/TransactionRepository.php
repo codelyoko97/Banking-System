@@ -10,7 +10,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function lastNByAccount(int $accountId, int $n = 50): Collection
     {
         return Transaction::where('account_id', $accountId)
-            ->where('status', 'succeeded') // عدّلها حسب قيم status لديك
+            ->where('status', 'succeeded') 
             ->orderBy('created_at', 'desc')
             ->limit($n)
             ->get()
@@ -23,7 +23,7 @@ class TransactionRepository implements TransactionRepositoryInterface
                     'type' => $t->type,
                     'status' => $t->status,
                     'description' => $t->description,
-                    'currency' => 'USD', // مؤقتاً للـ PoC
+                    'currency' => 'USD', 
                 ];
             });
     }

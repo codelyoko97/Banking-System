@@ -61,4 +61,17 @@ class EloquentAccountRepository implements AccountRepositoryInterface
       $this->loadChildrenRecursive($child);
     }
   }
+
+
+  public function all()
+  {
+    return Account::with(['type', 'status', 'children'])->get();
+  }
+
+  public function listByCustomer(int $customerId)
+  {
+    return Account::where('customer_id', $customerId)
+      ->with(['type', 'status', 'children'])
+      ->get();
+  }
 }

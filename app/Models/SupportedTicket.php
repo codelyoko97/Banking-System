@@ -9,10 +9,16 @@ class SupportedTicket extends Model
     protected $fillable = [
         'customer_id',
         'title',
-        'message'
+        'message',
+        'status', 
+        'priority'
     ];
 
     public function customer() {
         return $this->belongsTo(User::class);
+    }
+
+     public function children() {
+        return $this->hasMany(SupportedTicketMessage::class, 'supported_ticket_id');
     }
 }
