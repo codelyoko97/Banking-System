@@ -16,7 +16,7 @@ class AuthService {
     $this->users = $users;
   }
 
-  public function register(array $data): User
+  public function registerCitizen(array $data): User
   {
     $data['password'] = Hash::make($data['password']);
     $data['role_id'] = 4;

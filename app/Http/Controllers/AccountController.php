@@ -50,4 +50,10 @@ class AccountController extends Controller
     $tree = $this->service->getAccountTreeStructured($id);
     return response()->json($tree);
   }
+
+  public function index()
+  {
+    $accounts = $this->service->listAccountsForUser(auth()->user());
+    return response()->json($accounts);
+  }
 }
