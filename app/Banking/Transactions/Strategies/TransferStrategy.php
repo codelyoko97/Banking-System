@@ -7,6 +7,7 @@ use App\DTO\ProcessTransactionDTO;
 use App\Models\{Account, Transaction, Log};
 use Illuminate\Support\Facades\DB;
 use DomainException;
+use Illuminate\Support\Facades\Cache;
 
 class TransferStrategy implements TransactionStrategy
 {
@@ -57,6 +58,12 @@ class TransferStrategy implements TransactionStrategy
         'action' => 'transfer',
         'description' => "Transfer {$dto->amount} from {$src->number} to {$dst->number} via strategy"
       ]);
+
+      Cache::forget("account:{$src->id}:fulltree");
+      Cache::forget("account:{$src->id}:children");
+      Cache::forget("accounts:list:user:{$src->customer_id}");
+      Cache::forget("account:{$src->id}:balance"); 
+
 
       return $txn->fresh();
     });

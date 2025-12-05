@@ -7,6 +7,7 @@ use App\DTO\ProcessTransactionDTO;
 use App\Models\{Account, Transaction, Log};
 use Illuminate\Support\Facades\DB;
 use DomainException;
+use Illuminate\Support\Facades\Cache;
 
 class DepositStrategy implements TransactionStrategy
 {
@@ -43,6 +44,12 @@ class DepositStrategy implements TransactionStrategy
         'action' => 'deposit',
         'description' => "Deposit {$dto->amount} to account {$account->number} via strategy"
       ]);
+
+      Cache::forget("account:{$account->id}:fulltree");
+      Cache::forget("account:{$account->id}:children");
+      Cache::forget("accounts:list:user:{$account->customer_id}");
+      Cache::forget("account:{$account->id}:balance"); 
+
 
       return $txn->fresh();
     });

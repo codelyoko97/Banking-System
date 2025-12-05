@@ -7,6 +7,7 @@ use App\Models\{Account, Transaction, Log, Notification};
 use App\Banking\Transactions\States\AccountStateFactory;
 use Illuminate\Support\Facades\DB;
 use DomainException;
+use Illuminate\Support\Facades\Cache;
 
 class WithdrawStrategy implements TransactionStrategy
 {
@@ -47,6 +48,10 @@ class WithdrawStrategy implements TransactionStrategy
         'action' => 'withdraw',
         'description' => "Withdraw {$dto->amount} from account {$account->number} via strategy"
       ]);
+      Cache::forget("account:{$account->id}:fulltree");
+      Cache::forget("account:{$account->id}:children");
+      Cache::forget("accounts:list:user:{$account->customer_id}");
+      Cache::forget("account:{$account->id}:balance");
 
       return $txn->fresh();
     });

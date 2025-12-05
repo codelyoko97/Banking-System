@@ -136,7 +136,7 @@ class AccountService
 
   public function listAccountsForUser($user)
   {
-    if ($user->role_id == 6) { 
+    if ($user->role_id == 6) {
       return $this->repo->listByCustomer($user->id);
     }
 

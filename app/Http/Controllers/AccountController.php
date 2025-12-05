@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\CreateAccountDTO;
 use App\Http\Requests\CreateAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Services\AccountService;
@@ -16,7 +17,12 @@ class AccountController extends Controller
 
   public function store(CreateAccountRequest $req)
   {
-    $acc = $this->service->create($req->validated());
+    // $acc = $this->service->create($req->validated());
+    $data = $req->validated();
+
+    $dto = CreateAccountDTO::fromArray($data);
+
+    $acc = $this->service->create($dto->toArray());
     return response()->json($acc, 201);
   }
 
