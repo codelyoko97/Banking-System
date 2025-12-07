@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,9 +16,22 @@ return Application::configure(basePath: dirname(__DIR__))
     $middleware->alias([
       'staff' => \App\Http\Middleware\StaffMiddleware::class,
     ]);
+    $middleware->append(\App\Http\Middleware\RequestStatsMiddleware::class);
   })
   ->withExceptions(function (Exceptions $exceptions): void {
     //
+    $exceptions->renderable(function (ModelNotFoundException $e, $request) {
+
+      // فقط عالج الخطأ لو كان API أو JSON
+      if ($request->expectsJson() || $request->is('api/*')) {
+        return response()->json([
+          'status' => false,
+          'message' => 'The requested resource was not found',
+          'model'   => class_basename($e->getModel()),
+          'id'      => $e->getIds()[0] ?? null,
+        ], 404);
+      }
+    });
   })
   ->withProviders([
     App\Providers\AuthServiceProvider::class,

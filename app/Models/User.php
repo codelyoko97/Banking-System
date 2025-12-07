@@ -72,6 +72,41 @@ class User extends Authenticatable
   }
 
 
+public function roleName(): ?string
+{
+    if ($this->relationLoaded('role') && $this->role) {
+        return $this->role->name;
+    }
+
+    return $this->role ? $this->role->name : null;
+}
+
+
+public function hasRole(string|array $roles): bool
+{
+    $name = $this->roleName();
+    if (!$name) return false;
+    if (is_array($roles)) {
+        return in_array($name, $roles, true);
+    }
+    return $name === $roles;
+}
+
+public function isAdmin(): bool { return $this->hasRole('Admin'); }
+public function isManager(): bool { return $this->hasRole('Manager'); }
+public function isCustomer(): bool { return $this->hasRole('Customer'); }
+public function isTeller(): bool { return $this->hasRole('Teller'); }
+public function isSupportAgent(): bool { return $this->hasRole('Support Agent'); }
+public function isAuditor(): bool { return $this->hasRole('Auditor'); }
+
+
+
+
+
+
+
+
+
 
   /**
    * Get the attributes that should be cast.

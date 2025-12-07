@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Services;
+
+use App\DTO\Dashboard\StaffDTO as DashboardStaffDTO;
+use App\DTOs\StaffDTO;
+use App\Models\User;
+use App\Repositories\UserRepositoryInterface;
+
+class StaffService
+{
+    public function __construct(
+        private UserRepositoryInterface $repo
+    ) {}
+
+    public function createStaff(DashboardStaffDTO $dto)
+    {
+        return $this->repo->createStaff([
+            'name' => $dto->name,
+            'email' => $dto->email,
+            'phone' => $dto->phone,
+            'role_id' => $dto->role_id,
+            'is_verified' => true,
+        ]);
+    }
+
+    public function listStaff()
+    {
+        return $this->repo->allStaff();
+    }
+
+    public function updateRole(int $userId, int $roleId)
+    {
+        $user = User::findOrFail($userId);
+        return $this->repo->updateRole($user, $roleId);
+    }
+
+    public function deleteStaff(int $userId)
+    {
+        $user = User::findOrFail($userId);
+        return $this->repo->delete($user);
+    }
+}

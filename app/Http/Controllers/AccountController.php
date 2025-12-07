@@ -57,9 +57,31 @@ class AccountController extends Controller
     return response()->json($tree);
   }
 
+  // public function index()
+  // {
+  //   $accounts = $this->service->listAccountsForUser(auth()->user());
+  //   return response()->json($accounts);
+  // }
   public function index()
   {
-    $accounts = $this->service->listAccountsForUser(auth()->user());
+    $status = request()->query('status'); 
+
+    $accounts = $this->service->filterByStatus($status);
+
     return response()->json($accounts);
+  }
+
+  public function changeStatus($id)
+  {
+    $validated = request()->validate([
+      'status' => 'required|string'
+    ]);
+
+    $acc = $this->service->changeStatus($id, $validated['status']);
+
+    return response()->json([
+      'message' => 'Status updated successfully',
+      'account' => $acc
+    ]);
   }
 }

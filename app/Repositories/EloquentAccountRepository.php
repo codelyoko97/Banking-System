@@ -78,4 +78,17 @@ class EloquentAccountRepository implements AccountRepositoryInterface
       ->with(['type', 'status', 'children'])
       ->get();
   }
+
+  public function filterByStatus(?string $status)
+  {
+    $q = Account::with(['type', 'status', 'children']);
+
+    if ($status) {
+      $q->whereHas('status', function ($s) use ($status) {
+        $s->where('name', $status);
+      });
+    }
+
+    return $q->orderByDesc('created_at')->get();
+  }
 }

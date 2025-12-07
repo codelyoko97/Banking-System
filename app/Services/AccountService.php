@@ -142,4 +142,32 @@ class AccountService
 
     return $this->repo->all();
   }
+
+  public function filterByStatus(?string $status)
+  {
+    return $this->repo->filterByStatus($status);
+  }
+
+  public function changeStatus(int $accountId, string $statusName)
+  {
+    $acc = $this->repo->find($accountId);
+    if (!$acc) {
+      throw new \Exception("Account not found");
+    }
+
+    $status = Status::where('name', $statusName)->first();
+    if (!$status) {
+      throw new \Exception("Invalid status name");
+    }
+
+    $acc = $this->repo->setStatus($acc, $status->id);
+
+    Log::create([
+      'user_id' => auth()->id(),
+      'action' => 'change_account_status',
+      'description' => "Account {$acc->number} status changed to {$statusName}"
+    ]);
+
+    return $acc;
+  }
 }
