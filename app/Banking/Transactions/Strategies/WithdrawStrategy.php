@@ -5,6 +5,9 @@ namespace App\Banking\Transactions\Strategies;
 use App\DTO\ProcessTransactionDTO;
 use App\Models\{Account, Transaction, Log, Notification};
 use App\Banking\Transactions\States\AccountStateFactory;
+use App\Events\TransactionApproved;
+use App\Events\TransactionCreated;
+use App\Jobs\LogJob;
 use Illuminate\Support\Facades\DB;
 use DomainException;
 use Illuminate\Support\Facades\Cache;
@@ -34,6 +37,8 @@ class WithdrawStrategy implements TransactionStrategy
       ]);
 
       if ($id != null) {
+        $txn['user_id'] = $id;
+        event(new TransactionCreated($txn));
         return $txn->fresh();
       }
 
@@ -43,6 +48,7 @@ class WithdrawStrategy implements TransactionStrategy
         throw new DomainException('Withdraw failed');
       }
 
+      LogJob::dispatch($account->customer_id, 'withdraw', "Withdraw {$dto->amount} from account {$account->number}");
       Log::create([
         'user_id' => $account->customer_id,
         'action' => 'withdraw',
@@ -66,6 +72,8 @@ class WithdrawStrategy implements TransactionStrategy
       }
       $state->withdraw($account, (float) $transaction->amount);
       $transaction->update(['status' => 'completed']);
+      $transaction['user_id'] = $account->customer->id;
+      event(new TransactionApproved($transaction));
       return true;
     });
   }

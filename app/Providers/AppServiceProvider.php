@@ -8,8 +8,6 @@ use App\Repositories\EloquentReportsRepository;
 use App\Repositories\EloquentTicketRepository;
 use App\Repositories\ReportsRepositoryInterface;
 use App\Repositories\TicketRepositoryInterface;
-use App\Repositories\TransactionRepository;
-use App\Repositories\TransactionRepositoryInterface;
 use App\Services\DatabaseNotificationAdapter;
 use App\Services\NotificationAdapterInterface;
 use Illuminate\Support\ServiceProvider;

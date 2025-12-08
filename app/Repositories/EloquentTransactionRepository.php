@@ -8,8 +8,9 @@ use App\Banking\Transactions\Strategies\DepositStrategy;
 use App\Banking\Transactions\Strategies\TransactionStrategy;
 use App\Banking\Transactions\Strategies\TransferStrategy;
 use App\Banking\Transactions\Strategies\WithdrawStrategy;
+use App\Events\TransactionRejected;
+use App\Jobs\LogJob;
 use App\Models\Account;
-use App\Models\Log;
 use App\Models\Notification;
 use App\Models\SchedualeTransaction;
 use DomainException;
@@ -51,15 +52,49 @@ class EloquentTransactionRepository implements TransactionRepositoryInterface
       ];
     }
 
-    Log::create([
-      'user_id' => $user->id,
-      'action' => $transaction->type,
-      'description' => "User {$user['name']} approved transaction {$transaction['id']}"
-    ]);
+    LogJob::dispatch(
+      $user->id,
+      $transaction->type,
+      $transaction->type == 'invoice'
+        ? "The invoice for {$transaction->amount} was accepted by {$user->name}"
+        : "User {$user['name']} approved transaction {$transaction['id']}"
+    );
+
     return [
       'status' => true,
       'message' => 'Transaction approved successfully',
       'transaction' => $transaction->fresh()
+    ];
+  }
+
+  public function reject(int $id)
+  {
+    $user = Auth::user();
+    $transaction = Transaction::with('account')->findOrFail($id);
+
+    if ($user->role_id != $transaction->role_id) {
+      return [
+        'status' => false,
+        'message' => 'Unauthorized to do this job'
+      ];
+    }
+
+    if ($transaction->status != 'pending') {
+      return [
+        'status' => false,
+        'message' => 'Something went wrong'
+      ];
+    }
+
+    $transaction->update([
+      'status' => 'rejected'
+    ]);
+
+    $transaction['user_id'] = $transaction->account->customer->id;
+    event(new TransactionRejected($transaction));
+    return [
+      'success' => true,
+      'message' => 'Transaction rejected successfully'
     ];
   }
 
@@ -70,6 +105,11 @@ class EloquentTransactionRepository implements TransactionRepositoryInterface
     return SchedualeTransaction::create($data);
   }
 
+  public function showTransactions()
+  {
+    $user = Auth::user();
+    return Transaction::query()->where('role_id', $user->role_id)->where('status', 'pending')->get();
+  }
 
   public function strategyFor(string $type): TransactionStrategy
   {
@@ -77,6 +117,7 @@ class EloquentTransactionRepository implements TransactionRepositoryInterface
       'deposit' => new DepositStrategy(),
       'withdraw' => new WithdrawStrategy(),
       'transfer' => new TransferStrategy(),
+      'invoice' => new TransferStrategy(),
       default => throw new DomainException('Unsupported transaction type')
     };
   }

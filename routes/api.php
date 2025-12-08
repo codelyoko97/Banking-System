@@ -3,12 +3,12 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminHealthController;
-use App\Http\Controllers\AdminTicketController;
 use App\Http\Controllers\AiController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\StaffController;
@@ -30,6 +30,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
   // Transactions
   Route::post('/transaction', [TransactionController::class, 'transaction']);
+  Route::post('/transaction/{id}/approve', [TransactionController::class, 'approve']);
+  Route::post('/transaction/{id}/reject', [TransactionController::class, 'reject']);
+  Route::post('/scheduled-transactions', [TransactionController::class, 'store']);
+  Route::get('/show-transactions', [TransactionController::class, 'showTransactions']);
+
+  Route::post('/pay', [PaymentController::class, 'processPayment']);
+  Route::post('/withdraw', [PaymentController::class, 'processWithdraw']);
+  Route::post('/balance', [PaymentController::class, 'getBalance']);
   Route::post('/transaction/{id}/approve', [TransactionController::class, 'approve'])->middleware(['auth:sanctum', 'can:approve-transaction']);;
   Route::post('/scheduled-transactions', [TransactionController::class, 'store']);
 

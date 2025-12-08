@@ -20,7 +20,6 @@ return new class extends Migration
       $table->foreignId('account_related_id')->nullable()->constrained('accounts')->cascadeOnUpdate()->cascadeOnDelete();
       $table->dateTime('next_run');
       $table->boolean('active')->default(true);
-      $table->date('start_date')->nullable();
       $table->date('end_date')->nullable();
       $table->unsignedTinyInteger('day_of_month')->nullable();
       $table->timestamps();

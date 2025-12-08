@@ -9,7 +9,9 @@ interface TransactionRepositoryInterface
 {
   public function find(int $id): ?Transaction;
   public function approve(int $id);
+  public function reject(int $id);
   public function createSchedule(array $data);
+  public function showTransactions();
   public function lastNByAccount(int $accountId, int $n = 50): \Illuminate\Support\Collection;
   public function monthlySpendingSummaryByAccount(int $accountId, int $months = 6): array;
   public function categorySpendingByAccount(int $accountId, int $months = 3): array;

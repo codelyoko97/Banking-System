@@ -31,8 +31,18 @@ class TransactionService
     return $this->transactionRepo->approve($id);
   }
 
+  public function reject($id)
+  {
+    return $this->transactionRepo->reject($id);
+  }
+
   public function addPlan(array $data)
   {
     return $this->transactionRepo->createSchedule($data);
+  }
+
+  public function showTransactions()
+  {
+    return $this->transactionRepo->showTransactions();
   }
 }

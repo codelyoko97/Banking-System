@@ -12,9 +12,6 @@ use Carbon\Carbon;
 
 class ScheduledTransactionService
 {
-  /**
-   * تشغيل جميع المعاملات المجدولة المستحقة
-   */
   public function runDue(): int
   {
     $now = Carbon::now();
@@ -34,18 +31,13 @@ class ScheduledTransactionService
     return $count;
   }
 
-  /**
-   * تنفيذ خطة واحدة
-   */
   protected function processPlan(SchedualeTransaction $plan): Transaction
   {
-    // سلسلة الموافقات
     $system  = new SystemApproval();
     $teller  = new TellerApproval();
     $manager = new ManagerApproval();
     $system->setNext($teller, 4)->setNext($manager, 2);
 
-    // بناء DTO من بيانات الخطة
     $dto = new ProcessTransactionDTO(
       $plan->account->number,
       $plan->amount,
@@ -59,9 +51,6 @@ class ScheduledTransactionService
     return $system->approve($dto);
   }
 
-  /**
-   * تحديث موعد التنفيذ القادم
-   */
   protected function updateNextRun(SchedualeTransaction $plan): void
   {
     $next = match ($plan->frequency) {
@@ -73,7 +62,6 @@ class ScheduledTransactionService
       default   => Carbon::parse($plan->next_run)->addDay(),
     };
 
-    // إذا انتهت صلاحية الخطة → تعطيلها
     if ($plan->end_date && $next->gt(Carbon::parse($plan->end_date))) {
       $plan->update(['active' => false]);
       return;

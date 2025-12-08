@@ -25,6 +25,11 @@ class AuthServiceProvider extends ServiceProvider
   {
     $this->registerPolicies();
 
+<<<<<<< HEAD
+    Gate::define('make-transaction', function ($user) {
+      return $user->role_id == 4;
+    });
+=======
     // Gate: approve transaction => Teller or Manager
     Gate::define('approve-transaction', fn($user) => $user->hasRole(['Teller', 'Manager']));
 
@@ -56,5 +61,6 @@ class AuthServiceProvider extends ServiceProvider
       fn($u) =>
       $u->hasRole(['Admin', 'Manager', 'Auditor'])
     );
+>>>>>>> a74fd2caaa2f5c0dbb418b1f4dbcd84e87b5532e
   }
 }

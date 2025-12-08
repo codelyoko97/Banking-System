@@ -39,7 +39,7 @@ class TransactionRequest extends FormRequest
       case 'store':
         return [
           'account_id'         => 'required',
-          'type'               => 'required|in:deposit,withdraw,transfer',
+          'type'               => 'required|in:deposit,withdraw,transfer,invoice',
           'amount'             => 'required|numeric|min:0.01',
           'account_related_id' => 'nullable',
           'frequency'          => 'required|in:daily,weekly,monthly',
