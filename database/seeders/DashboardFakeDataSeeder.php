@@ -33,7 +33,7 @@ class DashboardFakeDataSeeder extends Seeder
         $admin = User::create([
             'name' => 'Admin User',
             'email' => 'admin@test.com',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('123123123'),
             'role_id' => $roles['Admin'],
             'phone' => '0999000000',
             'is_verified' => true,
