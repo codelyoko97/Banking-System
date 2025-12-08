@@ -12,20 +12,20 @@ use Illuminate\Support\Facades\Mail;
 
 class SendTicketReplyEmail implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+  use InteractsWithQueue, Queueable, SerializesModels;
 
-    public SupportedTicket $ticket;
-    public SupportedTicketMessage $message;
+  public SupportedTicket $ticket;
+  public SupportedTicketMessage $message;
 
-    public function __construct(SupportedTicket $ticket, SupportedTicketMessage $message)
-    {
-        $this->ticket = $ticket;
-        $this->message = $message;
-    }
+  public function __construct(SupportedTicket $ticket, SupportedTicketMessage $message)
+  {
+    $this->ticket = $ticket;
+    $this->message = $message;
+  }
 
-    public function handle(): void
-    {
-          Mail::html("
+  public function handle(): void
+  {
+    Mail::html("
 <!DOCTYPE html>
 <html lang='ar'>
 <head>
@@ -89,8 +89,8 @@ class SendTicketReplyEmail implements ShouldQueue
 </body>
 </html>
 ", function ($message) {
-          $message->to($this->ticket->customer->email)
-            ->subject("Reply on ticket #{$this->ticket->id}");
-        });
-    }
+      $message->to($this->ticket->customer->email)
+        ->subject("Reply on ticket #{$this->ticket->id}");
+    });
+  }
 }

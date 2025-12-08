@@ -17,7 +17,6 @@ class SchedualeTransaction extends Model
     'account_related_id',
     'next_run',
     'active',
-    'start_date',
     'end_date',
     'day_of_month',
   ];
@@ -25,7 +24,6 @@ class SchedualeTransaction extends Model
   protected $casts = [
     'amount' => 'decimal:4',
     'next_run' => 'datetime',
-    'start_date' => 'date',
     'end_date' => 'date',
     'active' => 'boolean',
   ];

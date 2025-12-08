@@ -7,7 +7,6 @@ use App\Banking\Transactions\Strategies\TransactionStrategy;
 use App\Banking\Transactions\Strategies\TransferStrategy;
 use App\Banking\Transactions\Strategies\WithdrawStrategy;
 use App\DTO\ProcessTransactionDTO;
-use App\Models\Notification;
 use App\Models\Transaction;
 use DomainException;
 
@@ -32,13 +31,7 @@ abstract class AbstractApprovalHandler implements ApprovalHandler
 
   public function approve(ProcessTransactionDTO $dto): Transaction
   {
-    if ($this->canApprove($dto) && $this->id == null) {
-      $strategy = $this->strategyFor($dto->type);
-      return $strategy->execute($dto, $this->id);
-    }
-
     if ($this->canApprove($dto)) {
-      $this->notifyUser();
       $strategy = $this->strategyFor($dto->type);
       return $strategy->execute($dto, $this->id);
     }
@@ -54,21 +47,13 @@ abstract class AbstractApprovalHandler implements ApprovalHandler
 
   abstract protected function canApprove(ProcessTransactionDTO $dto): bool;
 
-  protected function notifyUser(): void
-  {
-    Notification::query()->create([
-      'user_id' => $this->id,
-      'content' => 'You have a new finintial request',
-      'type' => 'Finintial approvment'
-    ]);
-  }
-
   public function strategyFor(string $type): TransactionStrategy
   {
     return match ($type) {
       'deposit' => new DepositStrategy(),
       'withdraw' => new WithdrawStrategy(),
       'transfer' => new TransferStrategy(),
+      'invoice' => new TransferStrategy(),
       default => throw new DomainException('Unsupported transaction type')
     };
   }

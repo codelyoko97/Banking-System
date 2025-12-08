@@ -4,9 +4,13 @@ namespace App\Banking\Transactions\Strategies;
 
 use App\Banking\Transactions\States\AccountStateFactory;
 use App\DTO\ProcessTransactionDTO;
+use App\Events\TransactionApproved;
+use App\Events\TransactionCreated;
+use App\Jobs\LogJob;
 use App\Models\{Account, Transaction, Log};
 use Illuminate\Support\Facades\DB;
 use DomainException;
+use Illuminate\Support\Facades\Auth;
 
 class TransferStrategy implements TransactionStrategy
 {
@@ -16,6 +20,10 @@ class TransferStrategy implements TransactionStrategy
       $src = Account::lockForUpdate()
         ->where('number', $dto->account_id)
         ->firstOrFail();
+
+      if (Auth::user()->id != $src->customer_id) {
+        throw new DomainException("You can't transfer from this account");
+      };
 
       if ($dto->amount > $src->balance) {
         throw new DomainException("Account doesn't have this amount");
@@ -30,7 +38,7 @@ class TransferStrategy implements TransactionStrategy
 
       $txn = Transaction::create([
         'account_id' => $src->id,
-        'type' => 'transfer',
+        'type' => $dto->type,
         'status' => $id != null ? 'pending' : 'completed',
         'amount' => $dto->amount,
         'account_related_id' => $dst->id,
@@ -40,6 +48,8 @@ class TransferStrategy implements TransactionStrategy
       ]);
 
       if ($id != null) {
+        $txn['user_id'] = $id;
+        event(new TransactionCreated($txn));
         return $txn->fresh();
       }
 
@@ -52,11 +62,13 @@ class TransferStrategy implements TransactionStrategy
       $ok2 = $dstState->deposit($dst, (float) $dto->amount);
       if (!$ok2) throw new DomainException('Transfer credit failed');
 
-      Log::create([
-        'user_id' => $src->customer_id,
-        'action' => 'transfer',
-        'description' => "Transfer {$dto->amount} from {$src->number} to {$dst->number} via strategy"
-      ]);
+      LogJob::dispatch(
+        $src->customer_id,
+        $dto->type,
+        $dto->type == 'transfer'
+          ? "Transfer {$dto->amount} from {$src->number} to {$dst->number}"
+          : "The invoice for {$dto->amount} was paid to {$dst->customer->name}"
+      );
 
       return $txn->fresh();
     });
@@ -77,6 +89,8 @@ class TransferStrategy implements TransactionStrategy
       $state->deposit($account2, (float) $transaction->amount);
 
       $transaction->update(['status' => 'completed']);
+      $transaction['user_id'] = $account->customer->id;
+      event(new TransactionApproved($transaction));
       return true;
     });
   }

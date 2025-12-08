@@ -4,6 +4,9 @@ namespace App\Banking\Transactions\Strategies;
 
 use App\Banking\Transactions\States\AccountStateFactory;
 use App\DTO\ProcessTransactionDTO;
+use App\Events\TransactionApproved;
+use App\Events\TransactionCreated;
+use App\Jobs\LogJob;
 use App\Models\{Account, Transaction, Log};
 use Illuminate\Support\Facades\DB;
 use DomainException;
@@ -29,6 +32,8 @@ class DepositStrategy implements TransactionStrategy
       ]);
 
       if ($id != null) {
+        $txn['user_id'] = $id;
+        event(new TransactionCreated($txn));
         return $txn->fresh();
       }
 
@@ -37,12 +42,7 @@ class DepositStrategy implements TransactionStrategy
       if (!$ok) {
         throw new DomainException('Deposit failed');
       }
-
-      Log::create([
-        'user_id' => $account->customer_id,
-        'action' => 'deposit',
-        'description' => "Deposit {$dto->amount} to account {$account->number} via strategy"
-      ]);
+      LogJob::dispatch($account->customer_id, 'deposit', "Deposit {$dto->amount} to account {$account->number}");
 
       return $txn->fresh();
     });
@@ -53,8 +53,9 @@ class DepositStrategy implements TransactionStrategy
     return DB::transaction(function () use ($account, $transaction) {
       $state = AccountStateFactory::make($account);
       $state->deposit($account, (float) $transaction->amount);
-
       $transaction->update(['status' => 'completed']);
+      $transaction['user_id'] = $account->customer->id;
+      event(new TransactionApproved($transaction));
       return true;
     });
   }

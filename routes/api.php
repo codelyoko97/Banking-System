@@ -7,6 +7,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RecommendationController;
 use App\Services\RecommendationService;
 use Illuminate\Http\Request;
@@ -27,8 +28,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
   // Transactions
   Route::post('/transaction', [TransactionController::class, 'transaction']);
   Route::post('/transaction/{id}/approve', [TransactionController::class, 'approve']);
+  Route::post('/transaction/{id}/reject', [TransactionController::class, 'reject']);
   Route::post('/scheduled-transactions', [TransactionController::class, 'store']);
-  
+  Route::get('/show-transactions', [TransactionController::class, 'showTransactions']);
+
+  Route::post('/pay', [PaymentController::class, 'processPayment']);
+  Route::post('/withdraw', [PaymentController::class, 'processWithdraw']);
+  Route::post('/balance', [PaymentController::class, 'getBalance']);
+
   Route::get('/account/types/all', [GeneralController::class, 'getAllAccountType']);
   Route::get('/account/statuses/all', [GeneralController::class, 'getAllStatuses']);
   Route::get('/roles/all', [GeneralController::class, 'getAllRoles']);

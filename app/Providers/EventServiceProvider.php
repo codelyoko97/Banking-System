@@ -16,11 +16,14 @@ class EventServiceProvider extends ServiceProvider
 
 
   // protected $listen = [
-  //   TicketCreated::class => [
-  //     SendNotificationOnTicketCreated::class,
+  //   \App\Events\TransactionCreated::class => [
+  //     \App\Listeners\SendNotificationOnTransactionCreated::class,
   //   ],
-  //   TicketReplied::class => [
-  //     SendNotificationOnTicketReplied::class,
+  //   \App\Events\TransactionApproved::class => [
+  //     \App\Listeners\SendNotificationOnTransactionApproved::class,
+  //   ],
+  //   \App\Events\TransactionRejected::class => [
+  //     \App\Listeners\SendNotificationOnTransactionRejected::class,
   //   ],
   // ];
 
