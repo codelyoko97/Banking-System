@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\CreateAccountDTO;
 use App\Http\Requests\CreateAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Services\AccountService;
@@ -16,7 +17,12 @@ class AccountController extends Controller
 
   public function store(CreateAccountRequest $req)
   {
-    $acc = $this->service->create($req->validated());
+    // $acc = $this->service->create($req->validated());
+    $data = $req->validated();
+
+    $dto = CreateAccountDTO::fromArray($data);
+
+    $acc = $this->service->create($dto->toArray());
     return response()->json($acc, 201);
   }
 
@@ -51,9 +57,31 @@ class AccountController extends Controller
     return response()->json($tree);
   }
 
+  // public function index()
+  // {
+  //   $accounts = $this->service->listAccountsForUser(auth()->user());
+  //   return response()->json($accounts);
+  // }
   public function index()
   {
-    $accounts = $this->service->listAccountsForUser(auth()->user());
+    $status = request()->query('status'); 
+
+    $accounts = $this->service->filterByStatus($status);
+
     return response()->json($accounts);
+  }
+
+  public function changeStatus($id)
+  {
+    $validated = request()->validate([
+      'status' => 'required|string'
+    ]);
+
+    $acc = $this->service->changeStatus($id, $validated['status']);
+
+    return response()->json([
+      'message' => 'Status updated successfully',
+      'account' => $acc
+    ]);
   }
 }

@@ -11,7 +11,6 @@ use App\Banking\Transactions\Strategies\WithdrawStrategy;
 use App\Events\TransactionRejected;
 use App\Jobs\LogJob;
 use App\Models\Account;
-use App\Models\Log;
 use App\Models\Notification;
 use App\Models\SchedualeTransaction;
 use DomainException;

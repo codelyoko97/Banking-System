@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\CreateTicketDTO;
+use App\DTOs\ReplyTicketDTO;
 use App\Http\Requests\CreateTicketRequest;
 use App\Http\Requests\ReplyTicketRequest;
 use App\Models\SupportedTicket;
@@ -10,62 +12,80 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    protected TicketService $service;
+  protected TicketService $service;
 
-    public function __construct(TicketService $service)
-    {
-        $this->service = $service;
+  public function __construct(TicketService $service)
+  {
+    $this->service = $service;
+  }
+
+  // public function store(CreateTicketRequest $req)
+  // {
+  //     $data = $req->validated();
+  //     $data['customer_id'] = $req->user()->id;
+  //     $ticket = $this->service->createTicket($data);
+  //     return response()->json($ticket, 201);
+  // }
+
+
+
+  public function store(CreateTicketRequest $req)
+  {
+    $data = $req->validated();
+    $data['customer_id'] = $req->user()->id;
+
+    $dto = CreateTicketDTO::fromArray($data);
+
+    $ticket = $this->service->createTicket($dto->toArray());
+
+    return response()->json($ticket, 201);
+  }
+
+
+  public function index(Request $req)
+  {
+    if ($req->user()->role_id == 5) {
+      return response()->json($this->service->listAllTickets());
     }
 
-    public function store(CreateTicketRequest $req)
-    {
-        $data = $req->validated();
-        $data['customer_id'] = $req->user()->id;
-        $ticket = $this->service->createTicket($data);
-        return response()->json($ticket, 201);
-    }
+    return response()->json($this->service->getUserTickets($req->user()->id));
+  }
 
+  public function show(Request $req, $id)
+  {
+    $ticket = $this->service->getTicket($id);
 
-    public function index(Request $req)
-    {
-        if ($req->user()->role_id == 5) {
-            return response()->json($this->service->listAllTickets());
-        }
+    $this->authorize('view', $ticket);
 
-        return response()->json($this->service->getUserTickets($req->user()->id));
-    }
+    return response()->json([
+      'ticket' => $ticket,
+    ]);
+  }
 
-    public function show(Request $req, $id)
-    {
-        $ticket = $this->service->getTicket($id);
+  public function reply(ReplyTicketRequest $req, $id)
+  {
+    $ticket = $this->service->getTicket($id);
 
-        $this->authorize('view', $ticket);
+    $this->authorize('reply', $ticket);
 
-        return response()->json([
-            'ticket' => $ticket,
-        ]);
-    }
+    $data = $req->validated();
+    $data['sender_id'] = $req->user()->id;
+    $data['sender_type'] = $req->user()->role_id == 5 ? 'staff' : 'user';
 
-    public function reply(ReplyTicketRequest $req, $id)
-    {
-        $ticket = $this->service->getTicket($id);
+    // $msg = $this->service->replyTicket($id, $data);
 
-        $this->authorize('reply', $ticket);
+    $dto = ReplyTicketDTO::fromArray($data);
 
-        $data = $req->validated();
-        $data['sender_id'] = $req->user()->id;
-        $data['sender_type'] = $req->user()->role_id == 5 ? 'staff' : 'user';
+    $msg = $this->service->replyTicket($id, $dto->toArray());
 
-        $msg = $this->service->replyTicket($id, $data);
+    return response()->json($msg, 201);
+  }
 
-        return response()->json($msg, 201);
-    }
+  public function changeStatus(Request $req, $id)
+  {
+    $this->authorize('manage', SupportedTicket::class);
 
-    public function changeStatus(Request $req, $id)
-    {
-        $this->authorize('manage', SupportedTicket::class);
-
-        $ticket = $this->service->changeStatus($id, $req->status);
-        return response()->json($ticket);
-    }
+    $ticket = $this->service->changeStatus($id, $req->status);
+    return response()->json($ticket);
+  }
 }
