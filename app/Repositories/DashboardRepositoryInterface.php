@@ -28,7 +28,7 @@ interface DashboardRepositoryInterface
 
   // Dashboard counters
   public function getAccountsToday(): int;
-  public function getTransactions24h(): int;
+  public function getTransactions24h(): array;
   public function getAllAccounts(): array;
 
   // Users

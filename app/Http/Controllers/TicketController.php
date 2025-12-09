@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\CreateTicketDTO;
-use App\DTOs\ReplyTicketDTO;
+use App\DTO\CreateTicketDTO;
+use App\DTO\ReplyTicketDTO;
 use App\Http\Requests\CreateTicketRequest;
 use App\Http\Requests\ReplyTicketRequest;
 use App\Models\SupportedTicket;

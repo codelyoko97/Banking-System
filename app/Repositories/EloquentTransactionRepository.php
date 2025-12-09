@@ -269,4 +269,20 @@ class EloquentTransactionRepository implements TransactionRepositoryInterface
     $parts = preg_split('/\s+/u', trim($desc));
     return $parts ? ucfirst($parts[0]) : null;
   }
+  public function allTransactions()
+  {
+    $user = Auth::user();
+
+    if (in_array($user->role_id, [1, 2, 4])) {
+      return Transaction::all();
+    }
+
+    if ($user->role_id == 6) {
+      return Transaction::query()
+        ->where('user_id', $user->id)
+        ->get();
+    }
+
+    return collect([]);
+  }
 }
