@@ -15,7 +15,8 @@ class SendNotificationOnTicketReplied
     app(NotificationAdapterInterface::class)->sendToUser(
       $ticket->customer_id,
       "New reply on your ticket #{$ticket->id}",
-      $event->message->message
+      $event->message->message,
+      "reply tikit",
     );
 
     dispatch(new SendTicketReplyEmail($ticket, $msg));
