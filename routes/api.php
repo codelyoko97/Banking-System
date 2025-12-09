@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::post('/transaction/{id}/reject', [TransactionController::class, 'reject']);
   Route::post('/scheduled-transactions', [TransactionController::class, 'store']);
   Route::get('/show-transactions', [TransactionController::class, 'showTransactions']);
+  Route::get('/transactions/all', [TransactionController::class, 'allTransactions']);
 
   Route::post('/pay', [PaymentController::class, 'processPayment']);
   Route::post('/withdraw', [PaymentController::class, 'processWithdraw']);
@@ -48,7 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 Route::prefix('account')->middleware('auth:sanctum')->group(function () {
-  Route::post('/', [AccountController::class, 'store'])->middleware('can:create-account');;
+  Route::post('/', [AccountController::class, 'store'])->middleware('can:create-account');
   Route::post('{id}', [AccountController::class, 'update']);
   Route::get('{id}/close', [AccountController::class, 'close']);
   // Route::get('{id}/balance', [AccountController::class, 'balance']);
@@ -86,27 +87,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-
-
-
-// //Admin
-// Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
-//   ->prefix('admin')
-//   ->group(function () {
-
-//     Route::get('/stats', [AdminDashboardController::class, 'stats']);
-
-//     Route::get('/charts/transactions-weekly', [AdminDashboardController::class, 'weeklyTransactions']);
-
-//     Route::get('/customers', [AdminDashboardController::class, 'customers']);
-
-//     Route::get('/employees', [AdminDashboardController::class, 'employees']);
-
-//     Route::get('/accounts', [AdminDashboardController::class, 'accounts']);
-//   });
-
-
-
 Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
   ->prefix('admin')
   ->group(function () {
@@ -131,6 +111,7 @@ Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
     Route::get('/logs/latest', [AdminDashboardController::class, 'latestLogs']);
     Route::get('/logs', [AdminDashboardController::class, 'logs']);
     Route::get('/logs/export', [AdminDashboardController::class, 'logsExport']);
+    Route::post('/addManager', [AdminDashboardController::class, 'addManager']);
   });
 
 Route::get('/admin/health', [AdminHealthController::class, 'health'])
@@ -144,25 +125,7 @@ Route::middleware(['auth:sanctum'])->prefix('admin/staff')->group(function () {
   Route::post('{id}/role', [StaffController::class, 'updateRole']);
 });
 
-
-
-// report
-// Route::prefix('admin/reports')->middleware(['auth:sanctum','can:download-reports'])->group(function () {
-
-//     // Daily
-//     Route::get('transactions/daily/pdf', [ReportsController::class, 'dailyPDF']);
-//     Route::get('transactions/daily/excel', [ReportsController::class, 'dailyExcel']);
-
-//     // Weekly
-//     Route::get('transactions/weekly/pdf', [ReportsController::class, 'weeklyPDF']);
-//     Route::get('transactions/weekly/excel', [ReportsController::class, 'weeklyExcel']);
-
-//     // Monthly
-//     Route::get('transactions/monthly/pdf', [ReportsController::class, 'monthlyPDF']);
-//     Route::get('transactions/monthly/excel', [ReportsController::class, 'monthlyExcel']);
-// });
-
 Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])->group(function () {
-  Route::get('/reports/transactions', [ReportsController::class, 'index']);
+  Route::get('/reports/transactions', [ReportsController::class, 'ind ex']);
   Route::get('/reports/account-summaries', [ReportsController::class, 'accountSummaries']);
 });

@@ -45,4 +45,9 @@ class TransactionService
   {
     return $this->transactionRepo->showTransactions();
   }
+
+  public function allTransactions()
+  {
+    return $this->transactionRepo->allTransactions();
+  }
 }

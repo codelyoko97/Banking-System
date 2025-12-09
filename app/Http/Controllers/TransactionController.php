@@ -40,8 +40,12 @@ class TransactionController extends Controller
     ], 201);
   }
 
-  public function showTransactions(){
+  public function showTransactions()
+  {
     return response()->json($this->transactionService->showTransactions());
   }
-
+  public function allTransactions()
+  {
+    return response()->json($this->transactionService->allTransactions());
+  }
 }

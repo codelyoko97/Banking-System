@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\AdminDashboardService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminDashboardController extends Controller
 {
@@ -85,4 +87,31 @@ class AdminDashboardController extends Controller
       "Content-Disposition" => "attachment; filename=logs.csv"
     ]);
   }
+
+   public function addManager(Request $request)
+    {
+        // التحقق من البيانات
+        $validated = $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'phone'    => 'required|string|unique:users,phone',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // إنشاء المستخدم
+        $manager = User::create([
+            'name'        => $validated['name'],
+            'email'       => $validated['email'],
+            'phone'       => $validated['phone'],
+            'password'    => Hash::make($validated['password']),
+            'role_id'     => 2,   // الماناجر
+            'is_verified' => 1,   // يكون مفعل مباشرة
+        ]);
+
+        return response()->json([
+            'message' => 'Manager created successfully',
+            'data'    => $manager,
+        ]);
+    }
+
 }

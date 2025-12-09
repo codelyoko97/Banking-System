@@ -6,6 +6,7 @@ use App\DTO\Dashboard\AccountsMonthlyDTO;
 use App\DTO\Dashboard\LogDTO;
 use App\DTO\Dashboard\StatusCountDTO;
 use App\DTO\Dashboard\TopCustomersDTO;
+use App\DTO\Dashboard\Transaction24hDTO;
 use App\DTO\Dashboard\WeeklyTransactionsDTO;
 use App\Repositories\DashboardRepositoryInterface;
 use Illuminate\Support\Facades\Cache;
@@ -49,9 +50,9 @@ class AdminDashboardService
   {
     // return $this->repo->getTopCustomers($limit);
     return Cache::remember('dashboard.top_customers', 60, function () {
-            $rows = $this->repo->getTopCustomers();
-            return (new TopCustomersDTO($rows))->data;
-        });
+      $rows = $this->repo->getTopCustomers();
+      return (new TopCustomersDTO($rows))->data;
+    });
   }
 
 
@@ -64,12 +65,19 @@ class AdminDashboardService
     ];
   }
 
+  // public function transactions24h(): array
+  // {
+  //   return [
+  //     'count' => $this->repo->getTransactions24h()
+  //   ];
+  // }
+
   public function transactions24h(): array
   {
-    return [
-      'count' => $this->repo->getTransactions24h()
-    ];
+    $row = $this->repo->getTransactions24h();
+    return Transaction24hDTO::build($row);
   }
+
 
   // -------------------- Users --------------------
 
@@ -91,33 +99,33 @@ class AdminDashboardService
   // }
 
   public function logs(array $filters, int $perPage = 20)
-{
+  {
     $paginated = $this->repo->getLogs($filters, $perPage);
 
     return [
-        'data' => array_map(
-            fn($log) => LogDTO::transform($log),
-            $paginated->items()
-        ),
-        'pagination' => [
-            'current_page' => $paginated->currentPage(),
-            'last_page'    => $paginated->lastPage(),
-            'per_page'     => $paginated->perPage(),
-            'total'        => $paginated->total(),
-        ]
+      'data' => array_map(
+        fn($log) => LogDTO::transform($log),
+        $paginated->items()
+      ),
+      'pagination' => [
+        'current_page' => $paginated->currentPage(),
+        'last_page'    => $paginated->lastPage(),
+        'per_page'     => $paginated->perPage(),
+        'total'        => $paginated->total(),
+      ]
     ];
-}
+  }
 
-public function exportLogs(array $filters)
-{
+  public function exportLogs(array $filters)
+  {
     $rows = $this->repo->exportLogs($filters);
 
     $csv = "ID,User,Email,Action,Description,Date\n";
 
     foreach ($rows as $r) {
-        $csv .= "{$r['id']},{$r['user']['name']},{$r['user']['email']},{$r['action']},\"{$r['description']}\",{$r['created_at']}\n";
+      $csv .= "{$r['id']},{$r['user']['name']},{$r['user']['email']},{$r['action']},\"{$r['description']}\",{$r['created_at']}\n";
     }
 
     return $csv;
-}
+  }
 }

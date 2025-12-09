@@ -1,18 +1,36 @@
 <?php
 
+// namespace App\DTO\Dashboard;
+
+// class WeeklyTransactionsDTO
+// {
+//     public array $data;
+
+//     public function __construct(array $rows)
+//     {
+//         $this->data = array_map(function ($row) {
+//             return [
+//                 'day'   => $row['day'],
+//                 'count' => (int) $row['count'],
+//             ];
+//         }, $rows);
+//     }
+// }
+
+
 namespace App\DTO\Dashboard;
 
 class WeeklyTransactionsDTO
 {
-    public array $data;
+  public array $data;
 
-    public function __construct(array $rows)
-    {
-        $this->data = array_map(function ($row) {
-            return [
-                'day'   => $row['day'],
-                'count' => (int) $row['count'],
-            ];
-        }, $rows);
-    }
+  public function __construct(array $rows)
+  {
+    $this->data = array_map(function ($r) {
+      return [
+        'day' => $r['day'],
+        'total' => (int)$r['total'],
+      ];
+    }, $rows);
+  }
 }

@@ -12,15 +12,25 @@ class DashboardRepository implements DashboardRepositoryInterface
 {
   // ------------------ Charts ------------------
 
+  // public function getWeeklyTransactions(): array
+  // {
+  //   return Transaction::selectRaw('DATE(created_at) as day, COUNT(*) as count')
+  //     ->where('created_at', '>=', now()->subDays(6)->startOfDay())
+  //     ->groupBy('day')
+  //     ->orderBy('day')
+  //     ->get()
+  //     ->toArray();
+  // }
   public function getWeeklyTransactions(): array
   {
-    return Transaction::selectRaw('DATE(created_at) as day, COUNT(*) as count')
+    return Transaction::selectRaw('DATE(created_at) as day, COUNT(*) as total')
       ->where('created_at', '>=', now()->subDays(6)->startOfDay())
       ->groupBy('day')
       ->orderBy('day')
       ->get()
       ->toArray();
   }
+
 
   public function getTransactionStatusCounts(): array
   {
@@ -61,10 +71,24 @@ class DashboardRepository implements DashboardRepositoryInterface
     return Account::whereDate('created_at', today())->count();
   }
 
-  public function getTransactions24h(): int
+  // public function getTransactions24h(): int
+  // {
+  //   return Transaction::where('created_at', '>=', now()->subDay())->count();
+  // }
+
+  public function getTransactions24h(): array
   {
-    return Transaction::where('created_at', '>=', now()->subDay())->count();
+    return Transaction::selectRaw("
+        COUNT(*) as total,
+        SUM(CASE WHEN status = 'succeeded' THEN 1 END) as success,
+        SUM(CASE WHEN status = 'failed' THEN 1 END) as failed,
+        SUM(CASE WHEN status = 'pending' THEN 1 END) as pending
+    ")
+      ->where('created_at', '>=', now()->subDay())
+      ->first()
+      ->toArray();
   }
+
 
   public function getAllAccounts(): array
   {
