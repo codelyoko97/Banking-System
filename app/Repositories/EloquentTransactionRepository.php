@@ -108,7 +108,12 @@ class EloquentTransactionRepository implements TransactionRepositoryInterface
   public function showTransactions()
   {
     $user = Auth::user();
-    return Transaction::query()->where('role_id', $user->role_id)->where('status', 'pending')->get();
+    $transactions = Transaction::query()->where('role_id', $user->role_id)->where('status', 'pending')->latest()->get();
+    foreach ($transactions as $transaction) {
+      $transaction['account_number'] = Account::where('id', $transaction->account_id)->first()->number;
+      $transaction['account_related_number'] = Account::where('id', $transaction->account_related_id)->first()->number ?? null;
+    }
+    return $transactions;
   }
 
   public function strategyFor(string $type): TransactionStrategy

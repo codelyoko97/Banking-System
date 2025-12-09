@@ -125,6 +125,8 @@ Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
     // users
     Route::get('/users/customers', [AdminDashboardController::class, 'customers']);
     Route::get('/users/employees', [AdminDashboardController::class, 'employees']);
+    Route::get('/getEmployees', [StaffController::class, 'employees']);
+    Route::post('/createEmployee', [StaffController::class, 'store']);
     Route::delete('removeuser/{id}', [StaffController::class, 'destroy']);
 
     // logs

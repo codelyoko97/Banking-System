@@ -7,7 +7,7 @@ use App\DTO\ProcessTransactionDTO;
 use App\Events\TransactionApproved;
 use App\Events\TransactionCreated;
 use App\Jobs\LogJob;
-use App\Models\{Account, Transaction, Log};
+use App\Models\{Account, Transaction};
 use Illuminate\Support\Facades\DB;
 use DomainException;
 use Illuminate\Support\Facades\Cache;
@@ -43,6 +43,7 @@ class DepositStrategy implements TransactionStrategy
       if (!$ok) {
         throw new DomainException('Deposit failed');
       }
+
       LogJob::dispatch($account->customer_id, 'deposit', "Deposit {$dto->amount} to account {$account->number}");
 
       Cache::forget("account:{$account->id}:fulltree");
