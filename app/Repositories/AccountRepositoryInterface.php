@@ -18,4 +18,8 @@ interface AccountRepositoryInterface
   public function listByCustomer(int $customerId);
   public function filterByStatus(?string $status);
 
+  // decorator
+   public function getAccountById(int $id);
+    public function getFeatures(int $accountId): array;
+
 }

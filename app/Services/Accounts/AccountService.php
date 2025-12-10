@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Accounts;
 
+use App\DTO\AccountDTO;
 use App\Repositories\AccountRepositoryInterface;
 use App\Banking\Accounts\AccountFactory;
 use App\Banking\Transactions\States\AccountStateFactory as StatesAccountStateFactory;
@@ -9,7 +10,12 @@ use App\Models\Account;
 use App\Models\Log;
 use App\Models\Status;
 use App\Models\Type;
+use App\Services\Accounts\Features\AccountInsurance;
+use App\Services\Accounts\Features\BaseAccount;
+use App\Services\Accounts\Features\OverdraftProtection;
+use App\Services\Accounts\Features\PremiumService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class AccountService
@@ -44,6 +50,12 @@ class AccountService
       'action' => 'create_account',
       'description' => "Account {$acc->number} created (type id {$acc->type_id})"
     ]);
+
+    Cache::forget("accounts:list:all");
+    if (isset($data['customer_id'])) {
+      Cache::forget("accounts:list:user:{$data['customer_id']}");
+    }
+
     return $acc;
   }
 
@@ -100,24 +112,51 @@ class AccountService
     return $num;
   }
 
+  // public function getBalanceRecursive(int $accountId): float
+  // {
+  //   $model = $this->repo->getFullTree($accountId);
+  //   if (!$model) throw new \Exception("Account not found");
+
+  //   $component = AccountFactory::buildTree($model, $this->repo);
+
+  //   return $component->getBalance();
+  // }
+
+
+
   public function getBalanceRecursive(int $accountId): float
   {
-    $model = $this->repo->getFullTree($accountId);
-    if (!$model) throw new \Exception("Account not found");
+    return Cache::remember("account:{$accountId}:balance", 300, function () use ($accountId) {
+      $model = $this->repo->getFullTree($accountId);
+      if (!$model) throw new \Exception("Account not found");
 
-    $component = AccountFactory::buildTree($model, $this->repo);
-
-    return $component->getBalance();
+      $component = AccountFactory::buildTree($model, $this->repo);
+      return $component->getBalance();
+    });
   }
+
+
+
+  // public function getAccountTreeStructured(int $accountId)
+  // {
+  //   $root = $this->repo->getFullTree($accountId);
+  //   if (!$root) throw new \Exception("Account not found");
+
+  //   return $this->formatAccountNode($root);
+  // }
 
 
   public function getAccountTreeStructured(int $accountId)
   {
-    $root = $this->repo->getFullTree($accountId);
-    if (!$root) throw new \Exception("Account not found");
+    return Cache::remember("account:{$accountId}:fulltree", 300, function () use ($accountId) {
+      $root = $this->repo->getFullTree($accountId);
+      if (!$root) throw new \Exception("Account not found");
 
-    return $this->formatAccountNode($root);
+      return $this->formatAccountNode($root);
+    });
   }
+
+
 
   private function formatAccountNode(Account $account)
   {
@@ -134,19 +173,45 @@ class AccountService
   }
 
 
+  // public function listAccountsForUser($user)
+  // {
+  //   if ($user->role_id == 6) {
+  //     return $this->repo->listByCustomer($user->id);
+  //   }
+
+  //   return $this->repo->all();
+  // }
+
+
   public function listAccountsForUser($user)
   {
     if ($user->role_id == 6) {
-      return $this->repo->listByCustomer($user->id);
+      return Cache::remember("accounts:list:user:{$user->id}", 300, function () use ($user) {
+        return $this->repo->listByCustomer($user->id);
+      });
     }
 
-    return $this->repo->all();
+    return Cache::remember("accounts:list:all", 300, function () {
+      return $this->repo->all();
+    });
   }
+
+
+  // public function filterByStatus(?string $status)
+  // {
+  //   return $this->repo->filterByStatus($status);
+  // }
+
 
   public function filterByStatus(?string $status)
   {
-    return $this->repo->filterByStatus($status);
+    $key = "accounts:filter:status:" . ($status ?? "all");
+
+    return Cache::remember($key, 300, function () use ($status) {
+      return $this->repo->filterByStatus($status);
+    });
   }
+
 
   public function changeStatus(int $accountId, string $statusName)
   {
@@ -168,6 +233,58 @@ class AccountService
       'description' => "Account {$acc->number} status changed to {$statusName}"
     ]);
 
+    Cache::forget("accounts:filter:status:active");
+    Cache::forget("accounts:filter:status:inactive");
+    Cache::forget("account:{$acc->id}:fulltree");
+    Cache::forget("account:{$acc->id}:balance");
+
     return $acc;
+  }
+
+  // decorator
+  public function getDecoratedAccount(int $id): AccountDTO
+  {
+    $raw = $this->repo->getAccountById($id);
+
+    // الحساب الأساسي
+    $account = new BaseAccount($raw->owner_name, $raw->balance);
+
+    // جلب الميزات من DB
+    $features = $this->repo->getFeatures($id);
+
+    // تطبيق الميزات حسب الجدول
+    foreach ($features as $f) {
+      if ($f === "overdraft") {
+        $account = new OverdraftProtection($account);
+      }
+      if ($f === "insurance") {
+        $account = new AccountInsurance($account);
+      }
+      if ($f === "premium") {
+        $account = new PremiumService($account);
+      }
+    }
+
+    return new AccountDTO(
+      $id,
+      $account->getDescription(),
+      $account->getBalance()
+    );
+  }
+  public function filterByStatusWithFeatures(?string $status)
+  {
+    $accounts = $this->repo->filterByStatus($status);
+
+    return $accounts->map(function ($acc) {
+      $features = $this->repo->getFeatures($acc->id);
+      return [
+        'id' => $acc->id,
+        'number' => $acc->number,
+        'type' => $acc->type->name ?? null,
+        'status' => $acc->status->name ?? null,
+        'balance' => (float)$acc->balance,
+        'features' => $features,
+      ];
+    });
   }
 }

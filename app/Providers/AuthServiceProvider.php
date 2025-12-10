@@ -32,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
     Gate::define('approve-transaction', fn($user) => $user->hasRole(['Teller', 'Manager']));
 
     // Gate: access admin dashboard => Admin or Manager
-    Gate::define('access-admin-dashboard', fn($user) => $user->hasRole(['Admin', 'Manager']));
+    Gate::define('access-admin-dashboard', fn($user) => $user->hasRole(['Admin', 'Manager', 'Support Agent']));
 
     // Gate: view logs => Admin or Auditor
     Gate::define('view-logs', fn($user) => $user->hasRole(['Admin', 'Auditor']));

@@ -268,7 +268,7 @@ class EloquentTransactionRepository implements TransactionRepositoryInterface
   {
     $user = Auth::user();
 
-    if (in_array($user->role_id, [1, 2, 4])) {
+    if (in_array($user->role_id, [1, 2, 4, 5])) {
       return Transaction::all();
     }
 

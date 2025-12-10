@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\DTO\CreateAccountDTO;
 use App\Http\Requests\CreateAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
-use App\Services\AccountService;
+use App\Services\Accounts\AccountService;
 
 class AccountController extends Controller
 {
@@ -59,15 +59,17 @@ class AccountController extends Controller
 
   // public function index()
   // {
-  //   $accounts = $this->service->listAccountsForUser(auth()->user());
+  //   $status = request()->query('status'); 
+
+  //   $accounts = $this->service->filterByStatus($status);
+
   //   return response()->json($accounts);
   // }
+
   public function index()
   {
-    $status = request()->query('status'); 
-
-    $accounts = $this->service->filterByStatus($status);
-
+    $status = request()->query('status');
+    $accounts = $this->service->filterByStatusWithFeatures($status);
     return response()->json($accounts);
   }
 

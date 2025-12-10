@@ -7,6 +7,8 @@ use App\Jobs\LogJob;
 use App\Models\Account;
 use App\Models\Log;
 use App\Models\Status;
+use App\Services\Accounts\AccountService;
+use Exception;
 
 class ActiveState implements AccountStateInterface
 {
@@ -17,13 +19,27 @@ class ActiveState implements AccountStateInterface
     return true;
   }
 
+  // public function withdraw(Account $account, float $amount): bool
+  // {
+  //   if (bccomp((string)$account->balance, (string)$amount, 4) < 0) {
+  //     throw new \Exception('Insufficient funds');
+  //   }
+  //   $account->balance = bcsub($account->balance, (string)$amount, 4);
+  //   $account->save();
+  //   return true;
+  // }
   public function withdraw(Account $account, float $amount): bool
   {
-    if (bccomp((string)$account->balance, (string)$amount, 4) < 0) {
-      throw new \Exception('Insufficient funds');
+    $decorated = app(AccountService::class)->getDecoratedAccount($account->id);
+    $available = $decorated->balance;
+
+    if ($available < $amount) {
+      throw new Exception("Insufficient funds");
     }
-    $account->balance = bcsub($account->balance, (string)$amount, 4);
+
+    $account->balance -= $amount;
     $account->save();
+
     return true;
   }
 
