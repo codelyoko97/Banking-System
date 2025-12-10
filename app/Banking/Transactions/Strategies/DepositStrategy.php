@@ -128,18 +128,15 @@ class DepositStrategy implements TransactionStrategy
 //       LogJob::dispatch($account->customer_id, 'deposit', "Deposit {$dto->amount} to account {$account->number}");
 // >>>>>>> 13e7bb2ae7711051dccb3a9b21ad6134cbbc4a78
 
-<<<<<<< HEAD
       Cache::forget("account:{$account->id}:fulltree");
       Cache::forget("account:{$account->id}:children");
       Cache::forget("accounts:list:user:{$account->customer_id}");
-=======
       LogJob::dispatch(
         $account->customer_id,
         'deposit',
         "Deposit {$finalAmount} to account {$account->number}"
       );
 
->>>>>>> 24ae493e38d067041de2ae696126eb47da1deac2
       Cache::forget("account:{$account->id}:balance");
 
       return $txn->fresh();
