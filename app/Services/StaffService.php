@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\Dashboard\StaffDTO as DashboardStaffDTO;
 use App\DTOs\StaffDTO;
+use App\Models\Account;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
@@ -46,5 +47,11 @@ class StaffService
   {
     $user = User::findOrFail($userId);
     return $this->repo->delete($user);
+  }
+
+  public function getAccountUser(string $accountNumber)
+  {
+    $account = Account::where('number', $accountNumber)->firstOrFail();
+    return User::where('id', $account->customer_id)->first();
   }
 }

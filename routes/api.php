@@ -45,6 +45,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('/account/types/all', [GeneralController::class, 'getAllAccountType']);
   Route::get('/account/statuses/all', [GeneralController::class, 'getAllStatuses']);
   Route::get('/roles/all', [GeneralController::class, 'getAllRoles']);
+
+  Route::get('/getNotifications', [GeneralController::class, 'getNotifications']);
 });
 
 
@@ -87,7 +89,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
+// Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
+Route::middleware(['auth:sanctum'])
   ->prefix('admin')
   ->group(function () {
 
@@ -106,6 +109,7 @@ Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
     Route::get('/users/customers', [AdminDashboardController::class, 'customers']);
     Route::get('/users/employees', [AdminDashboardController::class, 'employees']);
     Route::get('/getEmployees', [StaffController::class, 'employees']);
+    Route::post('/getAccountUser', [StaffController::class, 'getAccountUser']);
     Route::post('/createEmployee', [StaffController::class, 'store']);
     Route::delete('removeuser/{id}', [StaffController::class, 'destroy']);
 

@@ -22,9 +22,9 @@ class TransferStrategy implements TransactionStrategy
         ->where('number', $dto->account_id)
         ->firstOrFail();
 
-      if (Auth::user()->id != $src->customer_id) {
-        throw new DomainException("You can't transfer from this account");
-      };
+      // if (Auth::user()->id != $src->customer_id) {
+      //   throw new DomainException("You can't transfer from this account");
+      // };
 
       if ($dto->amount > $src->balance) {
         throw new DomainException("Account doesn't have this amount");

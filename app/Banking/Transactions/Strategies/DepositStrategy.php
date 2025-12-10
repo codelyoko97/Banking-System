@@ -49,8 +49,7 @@ class DepositStrategy implements TransactionStrategy
       Cache::forget("account:{$account->id}:fulltree");
       Cache::forget("account:{$account->id}:children");
       Cache::forget("accounts:list:user:{$account->customer_id}");
-      Cache::forget("account:{$account->id}:balance"); 
-
+      Cache::forget("account:{$account->id}:balance");
 
       return $txn->fresh();
     });
