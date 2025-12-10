@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Account;
+use Illuminate\Support\Facades\DB;
 
 class EloquentAccountRepository implements AccountRepositoryInterface
 {
@@ -90,5 +91,19 @@ class EloquentAccountRepository implements AccountRepositoryInterface
     }
 
     return $q->orderByDesc('created_at')->get();
+  }
+
+  // decorator
+  public function getAccountById(int $id)
+  {
+    return Account::findOrFail($id);
+  }
+
+  public function getFeatures(int $accountId): array
+  {
+    return DB::table('account_features')
+      ->where('account_id', $accountId)
+      ->pluck('feature')
+      ->toArray();
   }
 }
