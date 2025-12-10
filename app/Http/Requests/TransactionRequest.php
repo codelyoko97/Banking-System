@@ -57,7 +57,7 @@ class TransactionRequest extends FormRequest
   public function toDTO(User $user): ProcessTransactionDTO
   {
     return new ProcessTransactionDTO(
-      account_id: (int) $this->input('account_id'),
+      account_id: $this->input('account_id'),
       amount: (float) $this->input('amount'),
       type: $this->input('type'),
       account_related_id: $this->input('account_related_id'),
