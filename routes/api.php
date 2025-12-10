@@ -143,6 +143,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
+
 // ==================== AUTH ====================
 Route::get('/user', fn(Request $request) => $request->user())->middleware('auth:sanctum');
 
@@ -234,7 +235,36 @@ Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])->prefix('admin
   Route::get('/reports/account-summaries', [ReportsController::class, 'accountSummaries']);
 });
 
-// ==================== ADMIN HEALTH ====================
+
+Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
+  ->prefix('admin')
+  ->group(function () {
+
+    Route::get('/charts/transactions-weekly', [AdminDashboardController::class, 'transactionsWeekly']);
+    Route::get('/charts/transactions-status', [AdminDashboardController::class, 'transactionsStatus']);
+    Route::get('/charts/accounts-monthly', [AdminDashboardController::class, 'accountsMonthly']);
+
+    Route::get('/top/customers', [AdminDashboardController::class, 'topCustomers']);
+    // Route::get('/top/merchants', [AdminDashboardController::class, 'topMerchants']);
+
+    // Dashboard counters
+    Route::get('/stats/accounts-today', [AdminDashboardController::class, 'accountsToday']);
+    Route::get('/stats/transactions-24h', [AdminDashboardController::class, 'transactions24h']);
+
+    // users
+    Route::get('/users/customers', [AdminDashboardController::class, 'customers']);
+    Route::get('/users/employees', [AdminDashboardController::class, 'employees']);
+    Route::get('/getEmployees', [StaffController::class, 'employees']);
+    Route::post('/createEmployee', [StaffController::class, 'store']);
+    Route::delete('removeuser/{id}', [StaffController::class, 'destroy']);
+
+    // logs
+    Route::get('/logs/latest', [AdminDashboardController::class, 'latestLogs']);
+    Route::get('/logs', [AdminDashboardController::class, 'logs']);
+    Route::get('/logs/export', [AdminDashboardController::class, 'logsExport']);
+    Route::post('/addManager', [AdminDashboardController::class, 'addManager']);
+  });
+
 Route::get('/admin/health', [AdminHealthController::class, 'health'])
   ->middleware(['auth:sanctum', 'can:access-admin-dashboard']);
 
