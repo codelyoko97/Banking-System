@@ -109,7 +109,6 @@ Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])->prefix('admin
   Route::get('/reports/account-summaries', [ReportsController::class, 'accountSummaries']);
 });
 
-
 // Route::middleware(['auth:sanctum', 'can:access-admin-dashboard'])
 Route::middleware(['auth:sanctum'])
   ->prefix('admin')
