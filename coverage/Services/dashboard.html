@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for C:\Users\dell\Desktop\Banking-System\app\Services</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css?v=11.0.11" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css?v=11.0.11" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css?v=11.0.11" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">C:\Users\dell\Desktop\Banking-System\app</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Services</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Accounts/Features/AccountInsurance.php.html#5">App\Services\Accounts\Features\AccountInsurance</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/Features/PremiumService.php.html#5">App\Services\Accounts\Features\PremiumService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#14">App\Services\AdminDashboardService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AiBankService.php.html#7">App\Services\AiBankService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AuthService.php.html#11">App\Services\AuthService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DatabaseNotificationAdapter.php.html#8">App\Services\DatabaseNotificationAdapter</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RecommendationService.php.html#7">App\Services\RecommendationService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportsService.php.html#10">App\Services\ReportsService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScheduledTransactionService.php.html#13">App\Services\ScheduledTransactionService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#12">App\Services\StaffService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SystemHealthService.php.html#9">App\Services\SystemHealthService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#15">App\Services\TicketService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#11">App\Services\TransactionService</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/Features/AccountDecorator.php.html#5">App\Services\Accounts\Features\AccountDecorator</a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#21">App\Services\Accounts\AccountService</a></td><td class="text-right">39%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="AuthService.php.html#11">App\Services\AuthService</a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#21">App\Services\Accounts\AccountService</a></td><td class="text-right">213</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#14">App\Services\AdminDashboardService</a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="ScheduledTransactionService.php.html#13">App\Services\ScheduledTransactionService</a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="ReportsService.php.html#10">App\Services\ReportsService</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="TicketService.php.html#15">App\Services\TicketService</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="AiBankService.php.html#7">App\Services\AiBankService</a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="DatabaseNotificationAdapter.php.html#8">App\Services\DatabaseNotificationAdapter</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="RecommendationService.php.html#7">App\Services\RecommendationService</a></td><td class="text-right">30</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Accounts/AccountService.php.html#62"><abbr title="App\Services\Accounts\AccountService::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#76"><abbr title="App\Services\Accounts\AccountService::close">close</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#127"><abbr title="App\Services\Accounts\AccountService::getBalanceRecursive">getBalanceRecursive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#186"><abbr title="App\Services\Accounts\AccountService::listAccountsForUser">listAccountsForUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#206"><abbr title="App\Services\Accounts\AccountService::filterByStatus">filterByStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#216"><abbr title="App\Services\Accounts\AccountService::changeStatus">changeStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#274"><abbr title="App\Services\Accounts\AccountService::filterByStatusWithFeatures">filterByStatusWithFeatures</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/Features/AccountDecorator.php.html#14"><abbr title="App\Services\Accounts\Features\AccountDecorator::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/Features/AccountDecorator.php.html#19"><abbr title="App\Services\Accounts\Features\AccountDecorator::getBalance">getBalance</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/Features/AccountInsurance.php.html#7"><abbr title="App\Services\Accounts\Features\AccountInsurance::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/Features/PremiumService.php.html#7"><abbr title="App\Services\Accounts\Features\PremiumService::getDescription">getDescription</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#16"><abbr title="App\Services\AdminDashboardService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#22"><abbr title="App\Services\AdminDashboardService::transactionsWeekly">transactionsWeekly</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#31"><abbr title="App\Services\AdminDashboardService::transactionStatusCounts">transactionStatusCounts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#40"><abbr title="App\Services\AdminDashboardService::accountsMonthly">accountsMonthly</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#49"><abbr title="App\Services\AdminDashboardService::topCustomers">topCustomers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#61"><abbr title="App\Services\AdminDashboardService::accountsToday">accountsToday</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#75"><abbr title="App\Services\AdminDashboardService::transactions24h">transactions24h</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#84"><abbr title="App\Services\AdminDashboardService::getAllCustomers">getAllCustomers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#89"><abbr title="App\Services\AdminDashboardService::getAllEmployees">getAllEmployees</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#101"><abbr title="App\Services\AdminDashboardService::logs">logs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#119"><abbr title="App\Services\AdminDashboardService::exportLogs">exportLogs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AiBankService.php.html#15"><abbr title="App\Services\AiBankService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AiBankService.php.html#27"><abbr title="App\Services\AiBankService::systemPrompt">systemPrompt</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AiBankService.php.html#38"><abbr title="App\Services\AiBankService::postChat">postChat</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AiBankService.php.html#72"><abbr title="App\Services\AiBankService::recommendation">recommendation</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AuthService.php.html#14"><abbr title="App\Services\AuthService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AuthService.php.html#19"><abbr title="App\Services\AuthService::registerCitizen">registerCitizen</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AuthService.php.html#29"><abbr title="App\Services\AuthService::generateAndSendOtp">generateAndSendOtp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AuthService.php.html#49"><abbr title="App\Services\AuthService::verifyOtp">verifyOtp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AuthService.php.html#63"><abbr title="App\Services\AuthService::attemptLogin">attemptLogin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AuthService.php.html#95"><abbr title="App\Services\AuthService::log">log</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DatabaseNotificationAdapter.php.html#10"><abbr title="App\Services\DatabaseNotificationAdapter::sendToUser">sendToUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DatabaseNotificationAdapter.php.html#19"><abbr title="App\Services\DatabaseNotificationAdapter::sendToStaff">sendToStaff</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RecommendationService.php.html#9"><abbr title="App\Services\RecommendationService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RecommendationService.php.html#11"><abbr title="App\Services\RecommendationService::buildAccountSummary">buildAccountSummary</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RecommendationService.php.html#31"><abbr title="App\Services\RecommendationService::txnToText">txnToText</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RecommendationService.php.html#37"><abbr title="App\Services\RecommendationService::buildUserPromptFromSummary">buildUserPromptFromSummary</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportsService.php.html#12"><abbr title="App\Services\ReportsService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportsService.php.html#14"><abbr title="App\Services\ReportsService::getByRange">getByRange</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportsService.php.html#24"><abbr title="App\Services\ReportsService::daily">daily</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportsService.php.html#31"><abbr title="App\Services\ReportsService::weekly">weekly</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportsService.php.html#38"><abbr title="App\Services\ReportsService::monthly">monthly</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportsService.php.html#45"><abbr title="App\Services\ReportsService::accountSummaries">accountSummaries</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScheduledTransactionService.php.html#15"><abbr title="App\Services\ScheduledTransactionService::runDue">runDue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScheduledTransactionService.php.html#34"><abbr title="App\Services\ScheduledTransactionService::processPlan">processPlan</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ScheduledTransactionService.php.html#54"><abbr title="App\Services\ScheduledTransactionService::updateNextRun">updateNextRun</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#14"><abbr title="App\Services\StaffService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#18"><abbr title="App\Services\StaffService::createStaff">createStaff</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#30"><abbr title="App\Services\StaffService::listStaff">listStaff</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#35"><abbr title="App\Services\StaffService::updateRole">updateRole</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#41"><abbr title="App\Services\StaffService::getAllEmployees">getAllEmployees</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#46"><abbr title="App\Services\StaffService::deleteStaff">deleteStaff</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="StaffService.php.html#52"><abbr title="App\Services\StaffService::getAccountUser">getAccountUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SystemHealthService.php.html#11"><abbr title="App\Services\SystemHealthService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SystemHealthService.php.html#13"><abbr title="App\Services\SystemHealthService::get">get</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#20"><abbr title="App\Services\TicketService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#27"><abbr title="App\Services\TicketService::listAllTickets">listAllTickets</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#33"><abbr title="App\Services\TicketService::createTicket">createTicket</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#59"><abbr title="App\Services\TicketService::replyTicket">replyTicket</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#98"><abbr title="App\Services\TicketService::changeStatus">changeStatus</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#106"><abbr title="App\Services\TicketService::getUserTickets">getUserTickets</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TicketService.php.html#111"><abbr title="App\Services\TicketService::getTicket">getTicket</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#15"><abbr title="App\Services\TransactionService::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#19"><abbr title="App\Services\TransactionService::process">process</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#29"><abbr title="App\Services\TransactionService::approve">approve</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#34"><abbr title="App\Services\TransactionService::reject">reject</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#39"><abbr title="App\Services\TransactionService::addPlan">addPlan</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#44"><abbr title="App\Services\TransactionService::showTransactions">showTransactions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TransactionService.php.html#49"><abbr title="App\Services\TransactionService::allTransactions">allTransactions</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#30"><abbr title="App\Services\Accounts\AccountService::create">create</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#245"><abbr title="App\Services\Accounts\AccountService::getDecoratedAccount">getDecoratedAccount</abbr></a></td><td class="text-right">86%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="ScheduledTransactionService.php.html#54"><abbr title="App\Services\ScheduledTransactionService::updateNextRun">updateNextRun</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="AuthService.php.html#63"><abbr title="App\Services\AuthService::attemptLogin">attemptLogin</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="AuthService.php.html#49"><abbr title="App\Services\AuthService::verifyOtp">verifyOtp</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="ReportsService.php.html#14"><abbr title="App\Services\ReportsService::getByRange">getByRange</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="DatabaseNotificationAdapter.php.html#19"><abbr title="App\Services\DatabaseNotificationAdapter::sendToStaff">sendToStaff</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="TicketService.php.html#59"><abbr title="App\Services\TicketService::replyTicket">replyTicket</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#216"><abbr title="App\Services\Accounts\AccountService::changeStatus">changeStatus</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="AiBankService.php.html#38"><abbr title="App\Services\AiBankService::postChat">postChat</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#30"><abbr title="App\Services\Accounts\AccountService::create">create</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#62"><abbr title="App\Services\Accounts\AccountService::update">update</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#76"><abbr title="App\Services\Accounts\AccountService::close">close</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#127"><abbr title="App\Services\Accounts\AccountService::getBalanceRecursive">getBalanceRecursive</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#186"><abbr title="App\Services\Accounts\AccountService::listAccountsForUser">listAccountsForUser</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="AdminDashboardService.php.html#119"><abbr title="App\Services\AdminDashboardService::exportLogs">exportLogs</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="AiBankService.php.html#15"><abbr title="App\Services\AiBankService::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="RecommendationService.php.html#11"><abbr title="App\Services\RecommendationService::buildAccountSummary">buildAccountSummary</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ScheduledTransactionService.php.html#15"><abbr title="App\Services\ScheduledTransactionService::runDue">runDue</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ScheduledTransactionService.php.html#34"><abbr title="App\Services\ScheduledTransactionService::processPlan">processPlan</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Accounts/AccountService.php.html#245"><abbr title="App\Services\Accounts\AccountService::getDecoratedAccount">getDecoratedAccount</abbr></a></td><td class="text-right">5</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 11.0.11</a> using <a href="https://www.php.net/" target="_top">PHP 8.2.12</a> and <a href="https://phpunit.de/">PHPUnit 11.5.45</a> at Thu Dec 11 16:41:04 UTC 2025.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js?v=11.0.11" type="text/javascript"></script>
+  <script src="../_js/d3.min.js?v=11.0.11" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js?v=11.0.11" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([13,0,0,0,2,0,0,0,0,0,0,2], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([70,0,0,0,0,0,0,0,1,1,1,9], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[39.6551724137931,29,"<a href=\"Accounts\/AccountService.php.html#21\">App\\Services\\Accounts\\AccountService<\/a>"],[33.33333333333333,3,"<a href=\"Accounts\/Features\/AccountDecorator.php.html#5\">App\\Services\\Accounts\\Features\\AccountDecorator<\/a>"],[0,1,"<a href=\"Accounts\/Features\/AccountInsurance.php.html#5\">App\\Services\\Accounts\\Features\\AccountInsurance<\/a>"],[100,3,"<a href=\"Accounts\/Features\/BaseAccount.php.html#5\">App\\Services\\Accounts\\Features\\BaseAccount<\/a>"],[100,2,"<a href=\"Accounts\/Features\/OverdraftProtection.php.html#5\">App\\Services\\Accounts\\Features\\OverdraftProtection<\/a>"],[0,1,"<a href=\"Accounts\/Features\/PremiumService.php.html#5\">App\\Services\\Accounts\\Features\\PremiumService<\/a>"],[0,12,"<a href=\"AdminDashboardService.php.html#14\">App\\Services\\AdminDashboardService<\/a>"],[0,7,"<a href=\"AiBankService.php.html#7\">App\\Services\\AiBankService<\/a>"],[0,15,"<a href=\"AuthService.php.html#11\">App\\Services\\AuthService<\/a>"],[0,5,"<a href=\"DatabaseNotificationAdapter.php.html#8\">App\\Services\\DatabaseNotificationAdapter<\/a>"],[0,5,"<a href=\"RecommendationService.php.html#7\">App\\Services\\RecommendationService<\/a>"],[0,10,"<a href=\"ReportsService.php.html#10\">App\\Services\\ReportsService<\/a>"],[0,12,"<a href=\"ScheduledTransactionService.php.html#13\">App\\Services\\ScheduledTransactionService<\/a>"],[0,7,"<a href=\"StaffService.php.html#12\">App\\Services\\StaffService<\/a>"],[0,2,"<a href=\"SystemHealthService.php.html#9\">App\\Services\\SystemHealthService<\/a>"],[0,10,"<a href=\"TicketService.php.html#15\">App\\Services\\TicketService<\/a>"],[0,7,"<a href=\"TransactionService.php.html#11\">App\\Services\\TransactionService<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"Accounts\/AccountService.php.html#25\">App\\Services\\Accounts\\AccountService::__construct<\/a>"],[78.94736842105263,6,"<a href=\"Accounts\/AccountService.php.html#30\">App\\Services\\Accounts\\AccountService::create<\/a>"],[0,2,"<a href=\"Accounts\/AccountService.php.html#62\">App\\Services\\Accounts\\AccountService::update<\/a>"],[0,2,"<a href=\"Accounts\/AccountService.php.html#76\">App\\Services\\Accounts\\AccountService::close<\/a>"],[100,1,"<a href=\"Accounts\/AccountService.php.html#107\">App\\Services\\Accounts\\AccountService::generateAccountNumber<\/a>"],[0,2,"<a href=\"Accounts\/AccountService.php.html#127\">App\\Services\\Accounts\\AccountService::getBalanceRecursive<\/a>"],[100,2,"<a href=\"Accounts\/AccountService.php.html#149\">App\\Services\\Accounts\\AccountService::getAccountTreeStructured<\/a>"],[90,1,"<a href=\"Accounts\/AccountService.php.html#161\">App\\Services\\Accounts\\AccountService::formatAccountNode<\/a>"],[0,2,"<a href=\"Accounts\/AccountService.php.html#186\">App\\Services\\Accounts\\AccountService::listAccountsForUser<\/a>"],[0,1,"<a href=\"Accounts\/AccountService.php.html#206\">App\\Services\\Accounts\\AccountService::filterByStatus<\/a>"],[0,3,"<a href=\"Accounts\/AccountService.php.html#216\">App\\Services\\Accounts\\AccountService::changeStatus<\/a>"],[86.66666666666667,5,"<a href=\"Accounts\/AccountService.php.html#245\">App\\Services\\Accounts\\AccountService::getDecoratedAccount<\/a>"],[0,1,"<a href=\"Accounts\/AccountService.php.html#274\">App\\Services\\Accounts\\AccountService::filterByStatusWithFeatures<\/a>"],[100,1,"<a href=\"Accounts\/Features\/AccountDecorator.php.html#9\">App\\Services\\Accounts\\Features\\AccountDecorator::__construct<\/a>"],[0,1,"<a href=\"Accounts\/Features\/AccountDecorator.php.html#14\">App\\Services\\Accounts\\Features\\AccountDecorator::getDescription<\/a>"],[0,1,"<a href=\"Accounts\/Features\/AccountDecorator.php.html#19\">App\\Services\\Accounts\\Features\\AccountDecorator::getBalance<\/a>"],[0,1,"<a href=\"Accounts\/Features\/AccountInsurance.php.html#7\">App\\Services\\Accounts\\Features\\AccountInsurance::getDescription<\/a>"],[100,1,"<a href=\"Accounts\/Features\/BaseAccount.php.html#10\">App\\Services\\Accounts\\Features\\BaseAccount::__construct<\/a>"],[100,1,"<a href=\"Accounts\/Features\/BaseAccount.php.html#16\">App\\Services\\Accounts\\Features\\BaseAccount::getDescription<\/a>"],[100,1,"<a href=\"Accounts\/Features\/BaseAccount.php.html#21\">App\\Services\\Accounts\\Features\\BaseAccount::getBalance<\/a>"],[100,1,"<a href=\"Accounts\/Features\/OverdraftProtection.php.html#7\">App\\Services\\Accounts\\Features\\OverdraftProtection::getDescription<\/a>"],[100,1,"<a href=\"Accounts\/Features\/OverdraftProtection.php.html#12\">App\\Services\\Accounts\\Features\\OverdraftProtection::getBalance<\/a>"],[0,1,"<a href=\"Accounts\/Features\/PremiumService.php.html#7\">App\\Services\\Accounts\\Features\\PremiumService::getDescription<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#16\">App\\Services\\AdminDashboardService::__construct<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#22\">App\\Services\\AdminDashboardService::transactionsWeekly<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#31\">App\\Services\\AdminDashboardService::transactionStatusCounts<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#40\">App\\Services\\AdminDashboardService::accountsMonthly<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#49\">App\\Services\\AdminDashboardService::topCustomers<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#61\">App\\Services\\AdminDashboardService::accountsToday<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#75\">App\\Services\\AdminDashboardService::transactions24h<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#84\">App\\Services\\AdminDashboardService::getAllCustomers<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#89\">App\\Services\\AdminDashboardService::getAllEmployees<\/a>"],[0,1,"<a href=\"AdminDashboardService.php.html#101\">App\\Services\\AdminDashboardService::logs<\/a>"],[0,2,"<a href=\"AdminDashboardService.php.html#119\">App\\Services\\AdminDashboardService::exportLogs<\/a>"],[0,2,"<a href=\"AiBankService.php.html#15\">App\\Services\\AiBankService::__construct<\/a>"],[0,1,"<a href=\"AiBankService.php.html#27\">App\\Services\\AiBankService::systemPrompt<\/a>"],[0,3,"<a href=\"AiBankService.php.html#38\">App\\Services\\AiBankService::postChat<\/a>"],[0,1,"<a href=\"AiBankService.php.html#72\">App\\Services\\AiBankService::recommendation<\/a>"],[0,1,"<a href=\"AuthService.php.html#14\">App\\Services\\AuthService::__construct<\/a>"],[0,1,"<a href=\"AuthService.php.html#19\">App\\Services\\AuthService::registerCitizen<\/a>"],[0,1,"<a href=\"AuthService.php.html#29\">App\\Services\\AuthService::generateAndSendOtp<\/a>"],[0,5,"<a href=\"AuthService.php.html#49\">App\\Services\\AuthService::verifyOtp<\/a>"],[0,6,"<a href=\"AuthService.php.html#63\">App\\Services\\AuthService::attemptLogin<\/a>"],[0,1,"<a href=\"AuthService.php.html#95\">App\\Services\\AuthService::log<\/a>"],[0,1,"<a href=\"DatabaseNotificationAdapter.php.html#10\">App\\Services\\DatabaseNotificationAdapter::sendToUser<\/a>"],[0,4,"<a href=\"DatabaseNotificationAdapter.php.html#19\">App\\Services\\DatabaseNotificationAdapter::sendToStaff<\/a>"],[0,1,"<a href=\"RecommendationService.php.html#9\">App\\Services\\RecommendationService::__construct<\/a>"],[0,2,"<a href=\"RecommendationService.php.html#11\">App\\Services\\RecommendationService::buildAccountSummary<\/a>"],[0,1,"<a href=\"RecommendationService.php.html#31\">App\\Services\\RecommendationService::txnToText<\/a>"],[0,1,"<a href=\"RecommendationService.php.html#37\">App\\Services\\RecommendationService::buildUserPromptFromSummary<\/a>"],[0,1,"<a href=\"ReportsService.php.html#12\">App\\Services\\ReportsService::__construct<\/a>"],[0,5,"<a href=\"ReportsService.php.html#14\">App\\Services\\ReportsService::getByRange<\/a>"],[0,1,"<a href=\"ReportsService.php.html#24\">App\\Services\\ReportsService::daily<\/a>"],[0,1,"<a href=\"ReportsService.php.html#31\">App\\Services\\ReportsService::weekly<\/a>"],[0,1,"<a href=\"ReportsService.php.html#38\">App\\Services\\ReportsService::monthly<\/a>"],[0,1,"<a href=\"ReportsService.php.html#45\">App\\Services\\ReportsService::accountSummaries<\/a>"],[0,2,"<a href=\"ScheduledTransactionService.php.html#15\">App\\Services\\ScheduledTransactionService::runDue<\/a>"],[0,2,"<a href=\"ScheduledTransactionService.php.html#34\">App\\Services\\ScheduledTransactionService::processPlan<\/a>"],[0,8,"<a href=\"ScheduledTransactionService.php.html#54\">App\\Services\\ScheduledTransactionService::updateNextRun<\/a>"],[0,1,"<a href=\"StaffService.php.html#14\">App\\Services\\StaffService::__construct<\/a>"],[0,1,"<a href=\"StaffService.php.html#18\">App\\Services\\StaffService::createStaff<\/a>"],[0,1,"<a href=\"StaffService.php.html#30\">App\\Services\\StaffService::listStaff<\/a>"],[0,1,"<a href=\"StaffService.php.html#35\">App\\Services\\StaffService::updateRole<\/a>"],[0,1,"<a href=\"StaffService.php.html#41\">App\\Services\\StaffService::getAllEmployees<\/a>"],[0,1,"<a href=\"StaffService.php.html#46\">App\\Services\\StaffService::deleteStaff<\/a>"],[0,1,"<a href=\"StaffService.php.html#52\">App\\Services\\StaffService::getAccountUser<\/a>"],[0,1,"<a href=\"SystemHealthService.php.html#11\">App\\Services\\SystemHealthService::__construct<\/a>"],[0,1,"<a href=\"SystemHealthService.php.html#13\">App\\Services\\SystemHealthService::get<\/a>"],[0,1,"<a href=\"TicketService.php.html#20\">App\\Services\\TicketService::__construct<\/a>"],[0,1,"<a href=\"TicketService.php.html#27\">App\\Services\\TicketService::listAllTickets<\/a>"],[0,1,"<a href=\"TicketService.php.html#33\">App\\Services\\TicketService::createTicket<\/a>"],[0,4,"<a href=\"TicketService.php.html#59\">App\\Services\\TicketService::replyTicket<\/a>"],[0,1,"<a href=\"TicketService.php.html#98\">App\\Services\\TicketService::changeStatus<\/a>"],[0,1,"<a href=\"TicketService.php.html#106\">App\\Services\\TicketService::getUserTickets<\/a>"],[0,1,"<a href=\"TicketService.php.html#111\">App\\Services\\TicketService::getTicket<\/a>"],[0,1,"<a href=\"TransactionService.php.html#15\">App\\Services\\TransactionService::__construct<\/a>"],[0,1,"<a href=\"TransactionService.php.html#19\">App\\Services\\TransactionService::process<\/a>"],[0,1,"<a href=\"TransactionService.php.html#29\">App\\Services\\TransactionService::approve<\/a>"],[0,1,"<a href=\"TransactionService.php.html#34\">App\\Services\\TransactionService::reject<\/a>"],[0,1,"<a href=\"TransactionService.php.html#39\">App\\Services\\TransactionService::addPlan<\/a>"],[0,1,"<a href=\"TransactionService.php.html#44\">App\\Services\\TransactionService::showTransactions<\/a>"],[0,1,"<a href=\"TransactionService.php.html#49\">App\\Services\\TransactionService::allTransactions<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
