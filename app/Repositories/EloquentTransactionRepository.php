@@ -278,9 +278,11 @@ class EloquentTransactionRepository implements TransactionRepositoryInterface
     }
 
     if ($user->role_id == 6) {
-      return Transaction::query()
-        ->where('user_id', $user->id)
-        ->get();
+      $account = Account::where('customer_id', $user->id)->get();
+      foreach ($account as $acc) {
+        $accountIds[] = $acc->id;
+      }
+      return Transaction::whereIn('account_id', $accountIds)->get();
     }
 
     return collect([]);

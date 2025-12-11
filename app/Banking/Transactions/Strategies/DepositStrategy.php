@@ -11,6 +11,7 @@ use App\Models\{Account, Transaction};
 use Illuminate\Support\Facades\DB;
 use DomainException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class DepositStrategy implements TransactionStrategy
 {
@@ -66,7 +67,7 @@ class DepositStrategy implements TransactionStrategy
       $account = Account::lockForUpdate()
         ->where('number', $dto->account_id)
         ->firstOrFail();
-
+      Log::info("message");
       // ---------------------------------
       // 1) جلب الميزات (decorator features)
       // ---------------------------------
@@ -113,9 +114,6 @@ class DepositStrategy implements TransactionStrategy
         return $txn->fresh();
       }
 
-      // ---------------------------------------------------
-      // 4) تنفيذ الإيداع الفعلي (بالمبلغ النهائي)
-      // ---------------------------------------------------
       $state = AccountStateFactory::make($account);
       $ok = $state->deposit($account, (float) $finalAmount);
 
@@ -128,6 +126,10 @@ class DepositStrategy implements TransactionStrategy
       //       LogJob::dispatch($account->customer_id, 'deposit', "Deposit {$dto->amount} to account {$account->number}");
       // >>>>>>> 13e7bb2ae7711051dccb3a9b21ad6134cbbc4a78
 
+
+      Cache::forget("account:{$account->id}:fulltree");
+      Cache::forget("account:{$account->id}:children");
+      Cache::forget("accounts:list:user:{$account->customer_id}");
       LogJob::dispatch(
         $account->customer_id,
         'deposit',

@@ -17,6 +17,7 @@ class TransactionController extends Controller
   public function transaction(TransactionRequest $request)
   {
     $dto = $request->toDTO($request->user());
+    // return response()->json($dto);
     return response()->json($this->transactionService->process($dto));
   }
 

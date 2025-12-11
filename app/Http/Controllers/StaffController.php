@@ -6,6 +6,7 @@ use App\DTO\Dashboard\StaffDTO;
 use App\Http\Requests\CreateStaffRequest;
 use App\Http\Requests\UpdateStaffRoleRequest;
 use App\Services\StaffService;
+use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
@@ -41,5 +42,13 @@ class StaffController extends Controller
     $this->service->deleteStaff($id);
 
     return response()->json(['message' => 'staff removed']);
+  }
+
+  public function getAccountUser(Request $request)
+  {
+    $request->validate([
+      'account_number' => 'required'
+    ]);
+    return response()->json($this->service->getAccountUser($request->account_number));
   }
 }

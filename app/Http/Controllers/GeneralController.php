@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\Status;
 use App\Models\Type;
+use Illuminate\Support\Facades\Auth;
 
 class GeneralController extends Controller
 {
@@ -25,5 +26,11 @@ class GeneralController extends Controller
   {
     $roles = Role::all(['id', 'name']);
     return response()->json($roles);
+  }
+
+  public function getNotifications()
+  {
+    $user = Auth::user();
+    return response()->json($user->notifications()->select('content', 'type', 'created_at')->latest()->get());
   }
 }
