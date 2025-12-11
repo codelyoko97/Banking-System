@@ -122,11 +122,11 @@ class DepositStrategy implements TransactionStrategy
       if (!$ok) {
         throw new DomainException('Deposit failed');
       }
-// <<<<<<< HEAD
-// =======
+      // <<<<<<< HEAD
+      // =======
 
-//       LogJob::dispatch($account->customer_id, 'deposit', "Deposit {$dto->amount} to account {$account->number}");
-// >>>>>>> 13e7bb2ae7711051dccb3a9b21ad6134cbbc4a78
+      //       LogJob::dispatch($account->customer_id, 'deposit', "Deposit {$dto->amount} to account {$account->number}");
+      // >>>>>>> 13e7bb2ae7711051dccb3a9b21ad6134cbbc4a78
 
       LogJob::dispatch(
         $account->customer_id,
