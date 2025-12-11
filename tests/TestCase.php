@@ -11,6 +11,7 @@ abstract class TestCase extends BaseTestCase
   {
     parent::setUp();
     $this->artisan('migrate');
+     \Illuminate\Support\Facades\DB::table('account_features')->truncate();
     // run seeders needed for tests
     $this->seed(\Database\Seeders\StatusAccountSeeder::class);
     $this->seed(\Database\Seeders\DatabaseSeeder::class);
