@@ -49,7 +49,7 @@ class StripeAdapter implements PaymentInterface
 
         return [
           'success' => true,
-          'payment_id' => $charge->id,
+          'transactionId' => $charge->id,
           'amount' => $amount,
           'message' => 'Payment successful'
         ];
