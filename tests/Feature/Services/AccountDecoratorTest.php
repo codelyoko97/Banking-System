@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Services;
 
 use App\Services\Accounts\Features\AccountDecorator;
 use App\Services\Accounts\Features\AccountInterface;
