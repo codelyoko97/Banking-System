@@ -273,7 +273,12 @@ class AccountService
   }
   public function filterByStatusWithFeatures(?string $status)
   {
-    $accounts = $this->repo->filterByStatus($status);
+    $user =  auth()->user();
+    if ($user->role_id == 6) {
+      $accounts = $this->repo->listByCustomer($user->id);
+    } else {
+      $accounts = $this->repo->filterByStatus(status: $status);
+    }
 
     return $accounts->map(function ($acc) {
       $features = $this->repo->getFeatures($acc->id);
