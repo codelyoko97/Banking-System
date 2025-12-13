@@ -2,9 +2,9 @@ name: Laravel CI
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   laravel-tests:
@@ -16,7 +16,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: bankingsystem
-        ports: ["3306:3306"]
+        ports: [ '3306:3306' ]
         options: >-
           --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
           --health-interval=10s
@@ -30,7 +30,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2.12"
+          php-version: '8.2.12'
           extensions: mbstring, bcmath, pdo_mysql
           coverage: none
 
@@ -62,8 +62,8 @@ jobs:
 
       - name: Set Stripe env variables
         run: |
-          echo "STRIPE_KEY=pk_test_51RxyIfE5xIUnP1krJp8XGWgOy9Pb2qtUjNcIKpCss30vejzo0C5GFvpWGTZJgZVeRa5QE7xl5DvBmojKImnUugvr00r1N3cj3l" >> .env
-          echo "STRIPE_SECRET=sk_test_51RxyIfE5xIUnP1krcNhCz20B2hzSh8eRJaPDdMjw7YBR4jnV3vK42KN8FUH0kWNGGhVLke9VL61ztx7TWwoQJTZE00kM11Urip" >> .env
+          echo "STRIPE_KEY=pk_test_..." >> .env
+          echo "STRIPE_SECRET=sk_test_..." >> .env
 
       - name: Run migrations
         run: php artisan migrate --force
@@ -74,19 +74,65 @@ jobs:
   deploy:
     needs: laravel-tests
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bankingsystem
+        ports: [ '3306:3306' ]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2.12'
+          extensions: mbstring, bcmath, pdo_mysql
+          coverage: none
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: Configure DB for deployment
+        run: |
+          echo "" >> .env
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=bankingsystem" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+
+      - name: Set Braintree env variables
+        run: |
+          echo "BRAINTREE_ENV=sandbox" >> .env
+          echo "BRAINTREE_MERCHANT_ID=wshnfxnhbsxd7yhk" >> .env
+          echo "BRAINTREE_PUBLIC_KEY=c2w5ksdjzvc756qg" >> .env
+          echo "BRAINTREE_PRIVATE_KEY=17ddee22710b531e2b2230c3eee944f3" >> .env
+
+      - name: Set Stripe env variables
+        run: |
+          echo "STRIPE_KEY=pk_test_..." >> .env
+          echo "STRIPE_SECRET=sk_test_..." >> .env
+
       - name: Simulate deployment
         run: |
           echo "Tests passed. Starting deployment..."
-          echo "Installing production dependencies..."
           composer install --no-dev --optimize-autoloader
-          echo "Running migrations..."
           php artisan migrate --force
-          echo "Clearing cache..."
           php artisan cache:clear
-          echo "🎉 Deployment simulation finished successfully!"
+          echo "Deployment simulation finished successfully!"
