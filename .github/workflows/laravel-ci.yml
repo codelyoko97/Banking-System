@@ -2,9 +2,9 @@ name: Laravel CI
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   laravel-tests:
@@ -16,9 +16,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: bankingsystem
-          MYSQL_USER: root
-          MYSQL_PASSWORD: root
-        ports: ["3306:3306"]
+        ports: [ '3306:3306' ]
         options: >-
           --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
           --health-interval=10s
@@ -32,7 +30,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2.12"
+          php-version: '8.2.12'
           extensions: mbstring, bcmath, pdo_mysql
           coverage: none
 
@@ -57,9 +55,6 @@ jobs:
 
       - name: Run migrations
         run: php artisan migrate --force
-
-      - name: Seed database
-        run: php artisan db:seed
 
       - name: Run tests
         run: php artisan test
