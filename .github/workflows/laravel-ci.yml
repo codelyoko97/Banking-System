@@ -101,7 +101,10 @@ jobs:
           php-version: "8.2.12"
           extensions: mbstring, bcmath, pdo_mysql
           coverage: none
-
+      
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+      
       - name: Copy .env
         run: cp .env.example .env
 
