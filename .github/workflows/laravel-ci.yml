@@ -62,8 +62,9 @@ jobs:
 
       - name: Set Stripe env variables
         run: |
-          echo "STRIPE_KEY=pk_test_..." >> .env
-          echo "STRIPE_SECRET=sk_test_..." >> .env
+          echo "STRIPE_KEY=pk_test_51RxyIfE5xIUnP1krJp8XGWgOy9Pb2qtUjNcIKpCss30vejzo0C5GFvpWGTZJgZVeRa5QE7xl5DvBmojKImnUugvr00r1N3cj3l" >> .env
+          echo "STRIPE_SECRET=sk_test_51RxyIfE5xIUnP1krcNhCz20B2hzSh8eRJaPDdMjw7YBR4jnV3vK42KN8FUH0kWNGGhVLke9VL61ztx7TWwoQJTZE00kM11Urip" >> .env
+
 
       - name: Run migrations
         run: php artisan migrate --force
