@@ -30,7 +30,7 @@ class StripeAdapter implements PaymentInterface
 
       $charge = Charge::create([
         'amount' => $amount * 100,
-        'currency' => 'usd',
+        'currency' => 'sek',
         'source' => $data['stripeToken'],
         'description' => 'Banking Payment'
       ]);
