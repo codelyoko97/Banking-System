@@ -73,7 +73,7 @@ class StripeAdapter implements PaymentInterface
     try {
       $payout = Payout::create([
         'amount' => $amount * 100,
-        'currency' => 'usd',
+        'currency' => 'sek',
         'description' => 'User withdrawal request'
       ], [
         // 'stripe_account' => $data['stripe_account_id']

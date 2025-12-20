@@ -40,7 +40,7 @@ class TransferStrategy implements TransactionStrategy
       $txn = Transaction::create([
         'account_id' => $src->id,
         'type' => $dto->type,
-        'status' => $id != null ? 'pending' : 'completed',
+        'status' => $id != null ? 'pending' : 'succeeded',
         'amount' => $dto->amount,
         'account_related_id' => $dst->id,
         'role_id' => $id,

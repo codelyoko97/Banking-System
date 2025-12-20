@@ -10,8 +10,8 @@ class AccountStateFactory {
         return match($name) {
             'active' => new ActiveState(),
             'frozen' => new FrozenState(),
-            // 'suspended' => new SuspendedState(), 
-            // 'closed' => new ClosedState(),
+            'suspended' => new SuspendedState(), 
+            'closed' => new ClosedState(),
             default => new ActiveState(),
         };
     }

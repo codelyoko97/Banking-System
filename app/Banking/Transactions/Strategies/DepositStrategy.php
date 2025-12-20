@@ -15,47 +15,6 @@ use Illuminate\Support\Facades\Log;
 
 class DepositStrategy implements TransactionStrategy
 {
-  // public function execute(ProcessTransactionDTO $dto, ?int $id): Transaction
-  // {
-  //   return DB::transaction(function () use ($dto, $id) {
-  //     $account = Account::lockForUpdate()
-  //       ->where('number', $dto->account_id)
-  //       ->firstOrFail();
-
-  //     $txn = Transaction::create([
-  //       'account_id' => $account->id,
-  //       'type' => 'deposit',
-  //       'status' => $id != null ? 'pending' : 'completed',
-  //       'amount' => $dto->amount,
-  //       'account_related_id' => null,
-  //       'role_id' => $id,
-  //       'employee_name' => $dto->employee_name ?? null,
-  //       'description' => $dto->description ?? null,
-  //     ]);
-
-  //     if ($id != null) {
-  //       $txn['user_id'] = $id;
-  //       event(new TransactionCreated($txn));
-  //       return $txn->fresh();
-  //     }
-
-  //     $state = AccountStateFactory::make($account);
-  //     $ok = $state->deposit($account, (float) $dto->amount);
-  //     if (!$ok) {
-  //       throw new DomainException('Deposit failed');
-  //     }
-  //     LogJob::dispatch($account->customer_id, 'deposit', "Deposit {$dto->amount} to account {$account->number}");
-
-  //     Cache::forget("account:{$account->id}:fulltree");
-  //     Cache::forget("account:{$account->id}:children");
-  //     Cache::forget("accounts:list:user:{$account->customer_id}");
-  //     Cache::forget("account:{$account->id}:balance"); 
-
-
-  //     return $txn->fresh();
-  //   });
-  // }
-
 
     public function execute(ProcessTransactionDTO $dto, ?int $id): Transaction
     {
@@ -97,7 +56,7 @@ class DepositStrategy implements TransactionStrategy
         $txn = Transaction::create([
           'account_id' => $account->id,
           'type' => 'deposit',
-          'status' => $id != null ? 'pending' : 'completed',
+          'status' => $id != null ? 'pending' : 'succeeded',
           'amount' => $dto->amount,      // المبلغ الأصلي
           'account_related_id' => null,
           'role_id' => $id,

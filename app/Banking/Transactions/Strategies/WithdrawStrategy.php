@@ -107,7 +107,7 @@ class WithdrawStrategy implements TransactionStrategy
       $txn = Transaction::create([
         'account_id' => $account->id,
         'type' => 'withdraw',
-        'status' => $id != null ? 'pending' : 'completed',
+        'status' => $id != null ? 'pending' : 'succeeded',
         'amount' => $dto->amount,
         'account_related_id' => $dto->account_related_id ?? null,
         'role_id' => $id,
