@@ -85,8 +85,7 @@ class DashboardFakeDataSeeder extends Seeder
         $merchants = ['Amazon', 'Apple', 'Starbucks', 'Nike', 'Adidas', null];
 
         foreach ($accounts as $account) {
-            // generate between 20–40 transactions
-            $count = rand(20, 40);
+            $count = rand(10, 20);
 
             for ($i = 0; $i < $count; $i++) {
                 $daysAgo = rand(0, 29);

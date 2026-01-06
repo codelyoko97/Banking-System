@@ -22,7 +22,8 @@ class TransactionService
     $teller = new TellerApproval();
     $manager = new ManagerApproval();
 
-    $system->setNext($teller, 4)->setNext($manager, 2);
+    // $system->setNext($teller, 4)->setNext($manager, 2);
+    $system->setNext($teller, 13)->setNext($manager, 11);
     return $system->approve($dto);
   }
 
